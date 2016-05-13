@@ -124,6 +124,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputHelper.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="navMesh.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjLoader.cpp" />
     <ClCompile Include="rand.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputHelper.h" />
     <ClInclude Include="Metrics.h" />
+    <ClInclude Include="navMesh.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjLoader.h" />
     <ClInclude Include="rand.h" />
