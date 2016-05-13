@@ -5,9 +5,6 @@
 #include "Camera.h"
 #include "Input.h"
 #include "Object.h"
-#include "Terrain.h"
-#include "Anatomy.h"
-#include "GLDebugDrawer.h"
 
 
 //Function List
