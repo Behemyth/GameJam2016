@@ -15,7 +15,7 @@ public:
 	virtual void Draw(Camera&);
 	virtual void Load();
 	virtual void Update(double );
-	btRigidBody* GetRigidBody();
+
 	glm::vec3 GetPosition();
 	glm::mat4 GetMatrix();
 
@@ -28,9 +28,7 @@ public:
 protected:
 	bool isStatic;
 	bool isGhost;
-	btDiscreteDynamicsWorld* world;
-	btCollisionShape* shape;
-	btRigidBody* rigidBody;
+
 	glm::mat4 position;
 	glm::mat4 positionNormal;
 	char* textureName;

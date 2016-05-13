@@ -102,37 +102,6 @@ Texture* Object::LoadTexture(Bitmap bmp){
 
 void Object::Load(){
 
-	if (!isStatic){
-		btTransform trans;
-		trans.setFromOpenGLMatrix(glm::value_ptr(position));
-		btDefaultMotionState* motState =
-			new btDefaultMotionState(trans);
-		btScalar mass = 1;
-		btVector3 fallInertia(0, 0, 0);
-		shape->calculateLocalInertia(mass, fallInertia);
-		btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, motState, shape, fallInertia);
-		rigidBody = new btRigidBody(fallRigidBodyCI);
-		rigidBody->setFriction(1.35f);
-		if (isGhost){
-			rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | rigidBody->CF_NO_CONTACT_RESPONSE);
-		}
-		world->addRigidBody(rigidBody);
-	}
-	else{
-		btTransform trans;
-		trans.setFromOpenGLMatrix(glm::value_ptr(position));
-		btDefaultMotionState* motState =
-			new btDefaultMotionState(trans);
-		btRigidBody::btRigidBodyConstructionInfo
-			groundRigidBodyCI(0, motState, shape, btVector3(0, 0, 0));
-		rigidBody = new btRigidBody(groundRigidBodyCI);
-		rigidBody->setFriction(1.35f);
-		if (isGhost){
-			rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | rigidBody->CF_NO_CONTACT_RESPONSE);
-		}
-		world->addRigidBody(rigidBody);
-	}
-
 	shader = LoadShaders(vertexName, "geometry-shader[basic].txt", fragmentName);
 	cameraUniform = shader->uniform("camera");
 	posNormUniform = shader->uniform("normalPos");
@@ -169,18 +138,13 @@ void Object::Update(double dt){
 	
 }
 void Object::UpdatePosition(){
-	btTransform trans;
-	rigidBody->getMotionState()->getWorldTransform(trans);
-	trans.getOpenGLMatrix(glm::value_ptr(position));
+
 }
 std::vector<Index>& Object::GetIndices(){
 	return indices;
 }
 std::vector<Vertex>& Object::GetVertices(){
 	return vertices;
-}
-btRigidBody* Object::GetRigidBody(){
-	return rigidBody;
 }
 glm::vec3 Object::GetPosition(){
 	return glm::vec3(position[3]);
