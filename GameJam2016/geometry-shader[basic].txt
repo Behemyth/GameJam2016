@@ -1,0 +1,28 @@
+#version 420 core
+
+layout (triangles) in;
+layout (triangle_strip,  max_vertices=3) out;
+
+in vec4 vert_GS_in[];
+in vec3 normal_GS_in[];
+in vec2 frag_GS_in[];
+
+out vec3 normal_FS_in;
+out vec2 frag_FS_in;
+out vec4 vertex_FS_in;
+
+void main() {
+ int i;
+ 
+ for ( i=0; i < gl_in.length(); i++) {
+
+  normal_FS_in = normal_GS_in[i];
+  frag_FS_in = frag_GS_in[i];
+  vertex_FS_in = vert_GS_in[i];
+  gl_Position = gl_in[i].gl_Position;
+  EmitVertex();
+ }
+ 
+ EndPrimitive();
+
+}

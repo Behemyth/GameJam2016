@@ -124,6 +124,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputHelper.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="navMesh.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjLoader.cpp" />
     <ClCompile Include="rand.cpp" />
@@ -139,12 +140,19 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputHelper.h" />
     <ClInclude Include="Metrics.h" />
+    <ClInclude Include="navMesh.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjLoader.h" />
     <ClInclude Include="rand.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderSupport.h" />
     <ClInclude Include="Texture.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="fragment-shader[basic].txt" />
+    <Text Include="fragment-shader[none].txt" />
+    <Text Include="geometry-shader[basic].txt" />
+    <Text Include="vertex-shader[basic].txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
