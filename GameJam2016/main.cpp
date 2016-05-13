@@ -237,7 +237,6 @@ void Run() {
 
 
 		Draw();
-		//world->debugDrawWorld();
 		glfwSwapBuffers(mainThread);
 	}
 
