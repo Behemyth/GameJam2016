@@ -23,10 +23,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ObjLoader.h">
+    <ClInclude Include="BasicIncludes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BasicIncludes.h">
+    <ClInclude Include="ObjLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
