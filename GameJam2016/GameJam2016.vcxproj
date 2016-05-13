@@ -66,14 +66,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InputHelper.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ObjLoader.cpp" />
     <ClCompile Include="rand.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShaderSupport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicIncludes.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="InputHelper.h" />
     <ClInclude Include="ObjLoader.h" />
     <ClInclude Include="rand.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderSupport.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
