@@ -82,8 +82,10 @@
     <ClInclude Include="BasicIncludes.h" />
     <ClInclude Include="Bitmap.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="GlobalStructures.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputHelper.h" />
+    <ClInclude Include="Metrics.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjLoader.h" />
     <ClInclude Include="rand.h" />

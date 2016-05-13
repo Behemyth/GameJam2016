@@ -174,37 +174,7 @@ void Run() {
 
 	glfwSetScrollCallback(mainThread, ScrollCallback);
 
-	//Init values and objects
 
-	// Build the broadphase
-	btBroadphaseInterface* broadphase = new btDbvtBroadphase();
-
-	// Set up the collision configuration and dispatcher
-	btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
-	btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
-
-	// The actual physics solver
-	btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
-
-	// The world.
-	btDiscreteDynamicsWorld* world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
-	world->setGravity(btVector3(0, -9.82f*METER, 0));
-
-
-	Terrain terrain = Terrain(world, 200, seed);
-	Object* terrainP = &terrain;
-	objects.push_back(terrainP);
-
-	for (int i = 0; i < 30; i++){
-		Anatomy* testOrg = new Anatomy(world, &terrain);
-		Object* testOrgP = testOrg;
-		objects.push_back(testOrgP);
-
-
-		float x = ((rand() % 50) - 25)*METER;
-		float y = ((rand() % 50) - 25)*METER;
-		testOrg->CreateBaseOrganism(glm::vec3(x, 0.0f, y));
-	}
 
 	//GLDebugDrawer debugDraw= GLDebugDrawer(&camera);
 
@@ -249,10 +219,8 @@ void Run() {
 
 			CameraInput(); //bypasses input system for direct camera manipulation
 
-			if (runPhysics){
-				Update(deltaTime*timeMod); //updates all objects based on the constant deltaTime.
-				world->stepSimulation(deltaTime*timeMod, glm::max(10 * timeMod, 10.0));
-			}
+			Update(deltaTime*timeMod); //updates all objects based on the constant deltaTime.
+			
 			GetPositions(); //transforms bullet matrices to opengl
 
 
@@ -274,13 +242,6 @@ void Run() {
 	}
 
 
-
-	//cleanup
-	delete world;
-	delete solver;
-	delete dispatcher;
-	delete collisionConfiguration;
-	delete broadphase;
 
 }
 
