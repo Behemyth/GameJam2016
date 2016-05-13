@@ -68,6 +68,7 @@
     <ClCompile Include="ObjLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BasicIncludes.h" />
     <ClInclude Include="ObjLoader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
