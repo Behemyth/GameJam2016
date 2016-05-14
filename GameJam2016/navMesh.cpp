@@ -119,7 +119,7 @@ std::vector<Face> NavMesh::findPath(std::vector<Face>& path, const Node& first, 
 
 }
 
-std::vector<Face> NavMesh::shortestPath(const Face& start, const Face& end) {
+void NavMesh::shortestPathHelper(std::vector<Face>& path, const Face& start, const Face& end) {
 	std::set<Node, sortF> openList;
 	std::set<Node> closedList;
 	std::vector<Face> path;
@@ -144,7 +144,7 @@ std::vector<Face> NavMesh::shortestPath(const Face& start, const Face& end) {
 			child.parent = &q;
 			if (child.v == last.v) {
 				findPath(path, first, last);
-				return path;
+				return;
 			}
 			child.g = q.g + distance(child, q);
 			child.h = distance(child, last);
@@ -160,7 +160,24 @@ std::vector<Face> NavMesh::shortestPath(const Face& start, const Face& end) {
 		}
 		closedList.insert(q);
 	}
+}
 
+std::vector<Face> NavMesh::shortestPath(const Vertex& start, const Vertex& end) {
+	std::vector<Face> path;
+	Face first;
+	Face last;
+
+	for (int i = 0; i < GetIndices().size(); i++) {
+		if (inFace(GetIndices()[i], start)) {
+			first = GetIndices()[i];
+		}
+		if (inFace(GetIndices()[i], end)) {
+			last = GetIndices()[i];
+		}
+	}
+
+	shortestPathHelper(path, first, last);
+	return path;
 
 }
 

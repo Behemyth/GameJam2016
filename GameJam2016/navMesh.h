@@ -20,7 +20,8 @@ public:
 
 	//A* FUNCTIONS ------------------------------------------------------------------------------
 	bool areNeighbors(const Face& a, const Face& b);
-	std::vector<Face> shortestPath(const Face& start, const Face& end);
+	void shortestPathHelper(std::vector<Face>& path, const Face& start, const Face& end);
+	std::vector<Face> shortestPath(const Vertex& start, const Vertex& end);
 	int indexIndex(const Face& v);
 	glm::vec3 center(const Face& a);
 	float distance(const Node& a, const Node& b);
