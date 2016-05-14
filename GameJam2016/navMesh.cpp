@@ -73,7 +73,7 @@ std::vector<Vertex> NavMesh::shortestPath(Vertex start, Vertex end) {
 	while (!openList.empty()) {
 		Node q = openList.top();
 		openList.pop();
-		//std::vector<Index> children = neighbors
+		std::vector<Index> children = neighbors[vertexIndex(q.v)];
 
 	}
 
