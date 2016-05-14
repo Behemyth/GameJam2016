@@ -1,7 +1,8 @@
 #include "Character.h"
 #include "rand.h"
 
-Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, NavMesh* n)
+
+Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, NavMesh* n,float sizeN)
 {
 	nm = n;
 
@@ -17,6 +18,9 @@ Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, Na
 
 	fragmentName = "fragment-shader[none].txt";
 
+	rotationXYZ = glm::vec3(1.0f, 0.0f, 1.0f);
+	rotation = -45.0f;
+	sizeXYZ = glm::vec3(sizeN);
 	position = glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, 0.0f));
 	destination = glm::vec3(0.0f, 0.0f, 0.0f);
 	positionXYZ = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -57,9 +61,27 @@ void Character::Update(double dt){
 		normalizedDirection = glm::normalize(nextDest - positionXYZ);
 		positionXYZ = positionXYZ + (normalizedDirection * float(dt) * float(0.1*METER));
 	}
+	else{
+		normalizedDirection = glm::normalize(normalizedDirection);
+	}
+	if (glm::length(normalizedDirection) > 0.0000001){
+		if (normalizedDirection.x >= 0 && normalizedDirection.z >= 0){
+			curStance = 3;
+		}
+		else if (normalizedDirection.x >= 0 && normalizedDirection.z <= 0){
+			curStance = 0;
+		}
+		else if (normalizedDirection.x <= 0 && normalizedDirection.z >= 0){
+			curStance = 1;
+		}
+		else{
+			curStance = 2;
+		}
 
 
-	if (counter>=1.0f){
+
+
+		if (counter >= 1.0f){
 		counter = 0.0f;
 		curFrame += 1;
 		if (curFrame >= glm::round(1.0f / framesSize)){
@@ -72,7 +94,7 @@ void Character::Update(double dt){
 		GetVertices()[3].texCoord = glm::vec2(((curFrame + 1)*framesSize), (curStance*stancesSize));
 
 	}
-
+	}
 
 	Object::Flush();
 	Object::Update(dt);

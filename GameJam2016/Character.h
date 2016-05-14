@@ -6,9 +6,10 @@ class Character :
 	public Object
 {
 public:
-	Character(float fps,int,  int, char*,bool, NavMesh*);
+	Character(float fps,int,  int, char*,bool, NavMesh*,float);
 	~Character();
 	void Update(double dt);
+	glm::vec3 normalizedDirection;
 private:
 	float counter;
 	float fps;
