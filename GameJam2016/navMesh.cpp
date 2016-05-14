@@ -6,6 +6,7 @@
 #include "GlobalStructures.h"
 
 struct Node {
+	Node* parent;
 	Vertex v;
 	float f, g, h;
 };
@@ -27,11 +28,9 @@ NavMesh::NavMesh(){
 	Load();
 }
 
-bool NavMesh::isNeighbor(const Index& a, const Index& b) {
+bool NavMesh::areNeighbors(const Index& a, const Index& b) {
 	for (int i = 0; i < 3; i++) {
-		if (GetVertices()[a.indices.x].position[0] == b.indices[i].position[0] &&
-			a.indices[i].position[0] == b.indices[i].position[0] &&
-			a.indices[i].position[0] == b.indices[i].position[0]) {
+		if (GetVertices()[a.indices[i]] == GetVertices()[b.indices[i]]) {
 			return true;
 		}
 		return false;
@@ -46,6 +45,15 @@ struct sortF {
 
 float distance(const Node& a, const Node& b) {
 	return sqrt(pow(a.v.position.x - b.v.position.x, 2) + pow(a.v.position.y - b.v.position.y, 2) + pow(a.v.position.z - b.v.position.z, 2));
+}
+
+int NavMesh::vertexIndex(Vertex v) {
+	for (int i = 0; i < GetVertices().size(); i++) {
+		if (GetVertices()[i] == v) {
+			return i;
+		}
+	}
+	return -1;
 }
 
 std::vector<Vertex> NavMesh::shortestPath(Vertex start, Vertex end) {
@@ -65,6 +73,7 @@ std::vector<Vertex> NavMesh::shortestPath(Vertex start, Vertex end) {
 	while (!openList.empty()) {
 		Node q = openList.top();
 		openList.pop();
+		//std::vector<Index> children = neighbors
 
 	}
 
