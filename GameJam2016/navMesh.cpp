@@ -23,9 +23,9 @@ NavMesh::NavMesh(){
 	Load();
 }
 
-bool isNeighbor(const Index& a, const Index& b) {
+bool NavMesh::isNeighbor(const Index& a, const Index& b) {
 	for (int i = 0; i < 3; i++) {
-		if (a.indices[i].position[0] == b.indices[i].position[0] &&
+		if (GetVertices()[a.indices.x].position[0] == b.indices[i].position[0] &&
 			a.indices[i].position[0] == b.indices[i].position[0] &&
 			a.indices[i].position[0] == b.indices[i].position[0]) {
 			return true;
