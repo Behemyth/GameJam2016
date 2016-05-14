@@ -196,13 +196,15 @@ void Character::Update(double dt){
 	else{
 		int p = posStorage.size() - 1 - int(mainC->timeCounter);
 
-		if (p <= 1){
-			mainC->end = true;
-		}
+
 		if (p <= thisTrigger&&once){
 			once = false;
 			irrklang::ISound* s = sound->play3D(fSound, irrklang::vec3df(0.0f, 0.0f, 0.0f), false, false, true);
 		}
+		if (p <= 0){
+			mainC->end = true;
+		}
+
 		glm::vec2 pos = posStorage[p];
 		positionXYZ.x = pos.x;
 		positionXYZ.z = pos.y;
