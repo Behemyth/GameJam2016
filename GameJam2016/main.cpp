@@ -34,7 +34,7 @@ bool wireframeToggle;
 double wireframeTimer;
 std::vector<Object*> objects;
 
-Object* playa=NULL;
+Character* playa=NULL;
 
 void Terminate() {
 	glfwTerminate();
@@ -194,7 +194,7 @@ void Run() {
 	Character* mainC = new Character(5, 4, 4, "CatSheet.png", false);
 	Object* mainCP = mainC;
 	objects.push_back(mainCP);
-	playa = mainCP;
+	playa = mainC;
 	//timer info for loop
 	double t = 0.0f;
 	double currentTime = glfwGetTime();
@@ -284,29 +284,46 @@ void MouseInput() {
 }
 void CameraInput() {
 	if (playa != NULL){
-		double moveSpeed;
+		float moveSpeed;
 		if (glfwGetKey(mainThread, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-			//moveSpeed = 50 * METER * deltaTime;
+			moveSpeed = 0.5 * METER * deltaTime;
 		}
 		else if (glfwGetKey(mainThread, GLFW_KEY_LEFT_ALT) == GLFW_PRESS) {
-			//moveSpeed = 1 * METER * deltaTime;
+			moveSpeed = 0.1 * METER * deltaTime;
 		}
 		else {
-			//moveSpeed = 4.5 * METER * deltaTime;
+			moveSpeed = 0.3 * METER * deltaTime;
 		}
+
+		glm::vec3 tempFor = camera.forward();
+		tempFor.y = 0.0f;
+		tempFor = glm::normalize(tempFor);
+
+		glm::vec3 tempRight = camera.right();
+		tempRight.y = 0.0f;
+		tempRight = glm::normalize(tempRight);
+		playa->normalizedDirection = glm::vec3(0);
 
 
 		if (glfwGetKey(mainThread, GLFW_KEY_S) == GLFW_PRESS) {
-			//playa->UpdatePosition()
+
+			playa->positionXYZ += -tempFor*moveSpeed;
+			playa->normalizedDirection += -tempFor*moveSpeed;
 			//camera.offsetPosition(float(moveSpeed) * -camera.forward());
 		}
 		else if (glfwGetKey(mainThread, GLFW_KEY_W) == GLFW_PRESS) {
+			playa->positionXYZ += tempFor*moveSpeed;
+			playa->normalizedDirection += tempFor*moveSpeed;
 			//camera.offsetPosition(float(moveSpeed) * camera.forward());
 		}
 		if (glfwGetKey(mainThread, GLFW_KEY_A) == GLFW_PRESS) {
+			playa->positionXYZ += -tempRight*moveSpeed;
+			playa->normalizedDirection += -tempRight*moveSpeed;
 			//camera.offsetPosition(float(moveSpeed) * -camera.right());
 		}
 		else if (glfwGetKey(mainThread, GLFW_KEY_D) == GLFW_PRESS) {
+			playa->positionXYZ += tempRight*moveSpeed;
+			playa->normalizedDirection += tempRight*moveSpeed;
 			//camera.offsetPosition(float(moveSpeed) * camera.right());
 		}
 		if (glfwGetKey(mainThread, GLFW_KEY_Z) == GLFW_PRESS) {
@@ -319,7 +336,7 @@ void CameraInput() {
 }
 void GetPositions(){
 	for (int i = 0; i < objects.size(); i++){
-		objects[i]->UpdatePosition(glm::vec3(0));
+		objects[i]->UpdatePosition();
 	}
 }
 void Update(double dt) {

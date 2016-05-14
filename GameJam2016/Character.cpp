@@ -15,8 +15,8 @@ Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI)
 
 	fragmentName = "fragment-shader[none].txt";
 
-	position = glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, 0.0f));
-
+	rotationXYZ = glm::vec3(1.0f, 0.0f, 1.0f);
+	rotation = -45.0f;
 
 	GetVertices().push_back({ { -height / 2.0f, height, 0.0f }, { (curFrame*framesSize), ((curStance + 1)*stancesSize) }, { 0.0f, 1.0f, 0.0f } });
 	GetVertices().push_back({ { height / 2.0f, height, 0.0f }, { ((curFrame + 1)*framesSize), ((curStance + 1)*stancesSize) }, { 0.0f, 1.0f, 0.0f } });
@@ -38,6 +38,24 @@ void Character::Update(double dt){
 
 
 	}
+	else{
+		normalizedDirection = glm::normalize(normalizedDirection);
+	}
+
+	if (normalizedDirection.x>0 && normalizedDirection.z>0){
+		curStance = 3;
+	}
+	else if (normalizedDirection.x>0 && normalizedDirection.z<0){
+		curStance = 0;
+	}
+	else if (normalizedDirection.x<0 && normalizedDirection.z>0){
+		curStance = 1;
+	}
+	else{
+		curStance = 2;
+	}
+
+
 
 
 	if (counter>=1.0f){

@@ -3,6 +3,12 @@
 
 Object::Object()
 {
+
+	positionXYZ=glm::vec3(0);
+	rotationXYZ = glm::vec3(0,1.0f,0);
+	rotation=0.0f;
+	sizeXYZ = glm::vec3(1*METER);
+
 	isStatic = false;
 	isGhost = false;
 	position = glm::mat4();
@@ -145,8 +151,10 @@ void Object::Flush(){
 void Object::Update(double dt){
 	
 }
-void Object::UpdatePosition(glm::vec3 tr){
-	position = glm::translate(glm::mat4(), tr);
+void Object::UpdatePosition(){
+	position = glm::translate(glm::mat4(), positionXYZ);
+	position = glm::rotate(position, glm::radians(rotation), rotationXYZ);
+	//position = glm::scale(position, sizeXYZ);
 }
 std::vector<Face>& Object::GetIndices(){
 	return indices;

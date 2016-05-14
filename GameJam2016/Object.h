@@ -19,8 +19,13 @@ public:
 	glm::vec3 GetPosition();
 	glm::mat4 GetMatrix();
 
-	virtual void UpdatePosition(glm::vec3);
+	virtual void UpdatePosition();
 	void ExtractFromFile(const char* name);
+
+	glm::vec3 positionXYZ;
+	glm::vec3 rotationXYZ;
+	float rotation;
+	glm::vec3 sizeXYZ;
 
 	std::vector<Face>& GetIndices();
 	std::vector<Vertex>& GetVertices();
@@ -30,7 +35,6 @@ protected:
 	bool isGhost;
 
 	glm::mat4 position;
-	glm::vec3 positionXYZ;
 	glm::mat4 positionNormal;
 	char* textureName;
 	char* displacementName;
