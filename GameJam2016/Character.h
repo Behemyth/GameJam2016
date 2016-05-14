@@ -18,8 +18,8 @@ private:
 
 	NavMesh* nm;
 
-	glm::vec3 normalizedDirection;
 	glm::vec3 destination;
+	Face previous;
 
 	std::vector<Face> path;
 

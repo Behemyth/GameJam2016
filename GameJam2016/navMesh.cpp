@@ -20,10 +20,29 @@ NavMesh::NavMesh(char * name){
 			}
 		}
 		neighbors.push_back(neighborsOfi);
-		std::cout << neighborsOfi.size() << std::endl;
 	}
+	std::cout << neighbors.size() << std::endl;
 	textureName = "dirt.jpg";
 	Load();
+}
+
+std::vector<Face> NavMesh::findNeighbors(glm::vec3 p) {
+	for (int i = 0; i < GetIndices().size(); i++) {
+		if (inFace(GetIndices()[i], p)) {
+			return neighbors[i];
+		}
+	}
+	std::vector<Face> blank;
+	return blank;
+}
+
+Face NavMesh::pointToFace(glm::vec3 p) {
+	for (int i = 0; i < GetIndices().size(); i++) {
+		if (inFace(GetIndices()[i], p)) {
+			return GetIndices()[i];
+		}
+	}
+	return Face();
 }
 
 bool NavMesh::inMesh(glm::vec3& v) {
@@ -81,9 +100,15 @@ bool NavMesh::areNeighbors(Face& a, Face& b) {
 	return false;
 }
 
-struct sortF {
+/*struct sortF {
 	bool operator() (const Node& a, const Node& b) const {
 		return a.f < b.f;
+	}
+};*/
+
+struct sortF {
+	bool operator() (const Node* a, const Node* b) const {
+		return a->f < b->f;
 	}
 };
 
@@ -115,8 +140,9 @@ float NavMesh::distance(Node& a, Node& b) {
 } */
 
 int NavMesh::indexIndex(Face& i) {
-	for (int x = 0; x < GetIndices().size(); x++) {
-		if (GetIndices()[x] == i ) {
+	std::vector<Face> faces = GetIndices();
+	for (int x = 0; x < faces.size(); x++) {
+		if (faces[x] == i) {
 			return x;
 		}
 	}
@@ -127,11 +153,13 @@ void printNode(Node& n) {
 	std::cout << n.v.indices[0] << ", " << n.v.indices[1] << ", " << n.v.indices[2] << std::endl;
 }
 
+
+
 std::vector<Face> NavMesh::findPath(std::vector<Face>& path, Node& first, Node& last) {
 	Node q = last;
 	std::cout << "first: ";  printNode(first);
 	std::cout << "last: ";  printNode(last);
-	while (q.parent != NULL) {
+	while (q.parent != NULL && !(q == first)) {
 		printNode(q);
 		path.push_back(q.v);
 		q = *(q.parent);
@@ -141,77 +169,81 @@ std::vector<Face> NavMesh::findPath(std::vector<Face>& path, Node& first, Node& 
 	return path;
 }
 
-std::vector<Face> NavMesh::findPath2(std::vector<Face>& path, std::map<Node, Node*> m, Node& last){
-	path.push_back(last.v);
-	Node q = last;
-	while (m.find(q) != m.end()) {
-		Node temp = *m[q];
-		m.erase(m.find(q));
-		q = temp;
-		path.push_back(q.v);
-	}
-	std::reverse(path.begin(), path.end());
-	return path;
-}
-
 void NavMesh::shortestPathHelper(std::vector<Face>& path, Face& start, Face& end) {
-	std::set<Node, sortF> openList;
-	std::set<Node> closedList;
+	std::set<Node*, sortF> openList;
+	std::set<Node*> closedList;
 
-	Node first;
-	first.v = start;
-	first.f = 0;
-	first.g = 0;
-	first.parent = NULL;
-	Node last;
-	last.v = end;
-	first.h = distance(first, last);
+	Node* first = NULL;
+	Node* last = NULL;
+
+	std::vector<Node> nodes;
+	for (int i = 0; i < GetIndices().size(); i++) {
+		Node n;
+		n.v = GetIndices()[i];
+		nodes.push_back(n);
+		if (n.v == start) {
+			first = &n;
+		}
+		if (n.v == end) {
+			last = &n;
+		}
+	}
+
+	first->f = 0;
+	first->g = 0;
+	first->parent = NULL;
+	first->h = distance(*first, *last);
 
 	openList.insert(first);
-	Node q;
+	Node* q;
 	while (!openList.empty()) {
-		q = *(openList.begin());
+ 		q = *(openList.begin());
 		openList.erase(openList.begin());
 		closedList.insert(q);
-		std::vector<Face> children = neighbors[indexIndex(q.v)];
-		std::vector<Node> childrenNodes;
-		Node child;
+		std::vector<Face> children = neighbors[indexIndex(q->v)];
+		//std::vector<Node> childrenNodes;
+
 		for (int i = 0; i < children.size(); i++) {
-			child.v = children[i];
-			if (child.v == last.v) {
-				findPath(path, first, child);
+			Node* child = NULL;
+			for (int x = 0; x < nodes.size(); x++) {
+				if (nodes[x].v == children[i]) {
+					child = &nodes[x];
+				}
+			}
+			child->g = q->g + distance(*child, *q);
+			child->parent = q;
+			if (child->v == last->v) {
+				findPath(path, *first, *child);
 				return;
 			}
 			if (closedList.find(child) != closedList.end()) {
 				continue;
 			}
-			std::set<Node>::iterator itr = openList.find(child); 
-			if (itr != openList.end() && (*itr).g > child.g) {
-				Node n = *itr;
+			std::set<Node*>::iterator itr = openList.find(child); 
+			if (itr != openList.end() && (*itr)->g > child->g) {
+				Node* n = *itr;
 				openList.erase(itr);
-				n.parent = &q;
-				n.g = child.g;
-				n.f = child.f;
+				n->parent = q;
+				n->g = child->g;
+				n->f = child->f;
 				openList.insert(n);
+				/*(*itr)->parent = q;
+				(*itr)->g = child->g;
+				(*itr)->f = (*itr)->h + (*itr)->g;*/
+
 			}
 			else if (itr != openList.end()) {
 				continue;
 			}
 			else {
+				child->g = q->g + distance(*child, *q);
+				child->h = distance(*child, *last);
+				child->f = child->g + child->h;
 				openList.insert(child);
-				child.parent = &q;
-				child.g = q.g + distance(child, q);
-				child.h = distance(child, last);
-				child.f = child.g + child.h;
 			}
-
-			//if ( (openList.find(child) != openList.end()) && ((*openList.find(child)).f < child.f) ) {
-			//	continue;
-			//}
 		}
 	} 
-	std::cout << "FAILED TO FIND PATH" << std::endl;
-
+	std::cout << "FAILED TO FIND PATH" << std::endl; 
 }
 
 

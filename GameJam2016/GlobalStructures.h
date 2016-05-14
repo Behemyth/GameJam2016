@@ -24,4 +24,8 @@ typedef struct Face{
 	bool operator ==(const Face& y) const {
 		return (indices[0] == y.indices[0] && indices[1] == y.indices[1] && indices[2] == y.indices[2]);
 	}
+	Face& operator =(const Face& y) {
+		indices = y.indices;
+		return *this;
+	}
 }Face;

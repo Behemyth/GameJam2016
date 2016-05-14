@@ -24,6 +24,7 @@ Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, Na
 	position = glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, 0.0f));
 	destination = glm::vec3(0.0f, 0.0f, 0.0f);
 	positionXYZ = glm::vec3(0.0f, 0.0f, 0.0f);
+	previous = nm->pointToFace(positionXYZ);
 
 
 	GetVertices().push_back({ { -height / 2.0f, height, 0.0f }, { (curFrame*framesSize), ((curStance + 1)*stancesSize) }, { 0.0f, 1.0f, 0.0f } });
@@ -39,11 +40,48 @@ Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, Na
 
 }
 
+bool vecsEqual(glm::vec3 a, glm::vec3 b) {
+	if (a.x > b.x - .01 && a.x < b.x + .01) {
+		if (a.y > b.y - .01 && a.y < b.y + .01) {
+			if (a.z>b.z - .01 && a.z < b.z + .01) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 void Character::Update(double dt){
 	counter += fps*dt;
 
 	if (isAI){
-		if (positionXYZ == destination || path.size() <= 0) {
+		
+		if (vecsEqual(destination, positionXYZ)) {
+			std::vector<Face> neighbors = nm->findNeighbors(positionXYZ);
+			Face nextFace;
+		
+			std::cout << neighbors.size();
+			if (neighbors.size() == 1) {
+				std::cout << "here" << std::endl;
+				nextFace = previous;
+			}
+			else {
+				do {
+					std::uniform_int_distribution<int> distro(0, neighbors.size() - 1);
+					int vertexNum = GetDistribution(distro);
+					nextFace = neighbors[vertexNum];
+				} while (nextFace == previous);
+			}
+		destination = nm->center(nextFace);
+		previous = nextFace;
+		std::cout << positionXYZ.x << " " << positionXYZ.y << " " << positionXYZ.z
+			<< ", " << destination.x << " " << destination.y << " " << destination.z << std::endl;
+		}
+		normalizedDirection = glm::normalize(destination - positionXYZ);
+		positionXYZ = positionXYZ + (normalizedDirection * float(dt) * float(0.1*METER));
+
+
+		/*if (positionXYZ == destination || path.size() <= 0) {
 			std::uniform_int_distribution<int> distro(0, nm->GetVertices().size()-1);
 			int vertexNum = GetDistribution(distro);
 			destination = nm->GetVertices()[vertexNum].position;
@@ -59,7 +97,9 @@ void Character::Update(double dt){
 			nextDest = destination;
 		}
 		normalizedDirection = glm::normalize(nextDest - positionXYZ);
-		positionXYZ = positionXYZ + (normalizedDirection * float(dt) * float(0.1*METER));
+		positionXYZ = positionXYZ + (normalizedDirection * float(dt) * float(0.1*METER));*/
+
+
 	}
 	else{
 		normalizedDirection = glm::normalize(normalizedDirection);
