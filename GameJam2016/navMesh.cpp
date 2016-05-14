@@ -24,7 +24,7 @@ NavMesh::NavMesh(){
 	Load();
 }
 
-bool NavMesh::inMesh(const Vertex& v) {
+bool NavMesh::inMesh(Vertex& v) {
 	for (int i = 0; i < GetIndices().size(); i++) {
 		if (inFace(GetIndices()[i], v)) {
 			return true;
@@ -34,7 +34,7 @@ bool NavMesh::inMesh(const Vertex& v) {
 }
 
 
-bool NavMesh::inFace(const Face& f, const Vertex& p) {
+bool NavMesh::inFace(Face& f, Vertex& p) {
 	// Compute vectors
 	glm::vec3 a = GetVertices()[f.indices.x].position;
 	glm::vec3 b = GetVertices()[f.indices.y].position;
@@ -61,7 +61,7 @@ bool NavMesh::inFace(const Face& f, const Vertex& p) {
 
 }
 
-bool NavMesh::areNeighbors(const Face& a, const Face& b) {
+bool NavMesh::areNeighbors(Face& a, Face& b) {
 	for (int i = 0; i < 3; i++) {
 		if (GetVertices()[a.indices[i]] == GetVertices()[b.indices[i]]) {
 			return true;
@@ -71,19 +71,19 @@ bool NavMesh::areNeighbors(const Face& a, const Face& b) {
 }
 
 struct sortF {
-	bool operator() (const Node& a, const Node& b) {
+	bool operator() (const Node& a, const Node& b) const {
 		return a.f < b.f;
 	}
 };
 
-glm::vec3 NavMesh::center(const Face& i) {
+glm::vec3 NavMesh::center(Face& i) {
 	float x = (GetVertices()[i.indices[0]].position.x + GetVertices()[i.indices[1]].position.x + GetVertices()[i.indices[2]].position.x) / 3;
 	float y = (GetVertices()[i.indices[0]].position.y + GetVertices()[i.indices[1]].position.y + GetVertices()[i.indices[2]].position.y) / 3;
 	float z = (GetVertices()[i.indices[0]].position.z + GetVertices()[i.indices[1]].position.z + GetVertices()[i.indices[2]].position.z) / 3;
 	return glm::vec3(x, y, z);
 }
 
-float NavMesh::distance(const Node& a, const Node& b) {
+float NavMesh::distance(Node& a, Node& b) {
 	glm::vec3 amid = center(a.v);
 	glm::vec3 bmid = center(b.v);
 	return sqrt(pow(amid.x - bmid.x, 2) + pow(amid.y - bmid.y, 2) + pow(amid.z - bmid.z, 2));
@@ -98,7 +98,7 @@ float NavMesh::distance(const Node& a, const Node& b) {
 	}
 } */
 
-int NavMesh::indexIndex(const Face& i) {
+int NavMesh::indexIndex(Face& i) {
 	for (int x = 0; x < GetIndices().size(); x++) {
 		if (GetIndices()[x] == i ) {
 			return x;
@@ -107,7 +107,7 @@ int NavMesh::indexIndex(const Face& i) {
 	return -1;
 }
 
-std::vector<Face> NavMesh::findPath(std::vector<Face>& path, const Node& first, const Node& last) {
+std::vector<Face> NavMesh::findPath(std::vector<Face>& path, Node& first, Node& last) {
 	Node q = last;
 	while (!(q == first)) {
 		path.push_back(q.v);
@@ -119,10 +119,9 @@ std::vector<Face> NavMesh::findPath(std::vector<Face>& path, const Node& first, 
 
 }
 
-void NavMesh::shortestPathHelper(std::vector<Face>& path, const Face& start, const Face& end) {
+void NavMesh::shortestPathHelper(std::vector<Face>& path, Face& start, Face& end) {
 	std::set<Node, sortF> openList;
 	std::set<Node> closedList;
-	std::vector<Face> path;
 
 	Node first;
 	first.v = start;
@@ -162,7 +161,7 @@ void NavMesh::shortestPathHelper(std::vector<Face>& path, const Face& start, con
 	}
 }
 
-std::vector<Face> NavMesh::shortestPath(const Vertex& start, const Vertex& end) {
+std::vector<Face> NavMesh::shortestPath(Vertex& start, Vertex& end) {
 	std::vector<Face> path;
 	Face first;
 	Face last;
