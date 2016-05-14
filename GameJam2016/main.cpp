@@ -42,11 +42,7 @@ Character* playa=NULL;
 
 void Terminate() {
 	glfwTerminate();
-	delete music;
-	delete engine;
-	for (int i = 0; i < objects.size(); i++){
-		delete objects[i];
-	}
+
 	exit(0);
 }
 
