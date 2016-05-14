@@ -6,6 +6,8 @@
 #include "Input.h"
 #include "Object.h"
 #include "navMesh.h"
+#include "Character.h"
+#include "Skybox.h"
 
 //Function List
 void Update(double);
@@ -142,7 +144,7 @@ void InitializeWindow() {
 	// setup camera 
 	camera.setViewportAspectRatio(SCREEN_SIZE.x / (float)SCREEN_SIZE.y);
 
-	camera.setPosition(glm::vec3(-METER*25.0f, METER*25.0f, METER*25.0f));
+	camera.setPosition(glm::vec3(-METER*2.0f, METER*1.5f, METER*2.0f));
 	camera.offsetOrientation(45.0f, 10.0f);
 
 	//unsigned concurentThreadsSupported = std::thread::hardware_concurrency();
@@ -174,11 +176,18 @@ void Run() {
 
 	glfwSetScrollCallback(mainThread, ScrollCallback);
 
+	Skybox* hand = new Skybox();
+	Object* handP = hand;
+	objects.push_back(handP);
+
+
 	NavMesh* navM = new NavMesh();
 	Object* nObj = navM;
 	objects.push_back(nObj);
 
-
+	Character* carM = new Character();
+	Object* nCar = carM;
+	objects.push_back(nCar);
 
 	//timer info for loop
 	double t = 0.0f;
