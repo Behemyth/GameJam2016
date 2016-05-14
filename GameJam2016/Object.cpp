@@ -166,7 +166,7 @@ std::vector<Vertex>& Object::GetVertices(){
 	return vertices;
 }
 glm::vec3 Object::GetPosition(){
-	return glm::vec3(position[3]);
+	return positionXYZ;
 }
 
 glm::mat4 Object::GetMatrix(){

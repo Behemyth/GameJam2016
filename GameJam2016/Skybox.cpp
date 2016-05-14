@@ -24,6 +24,9 @@ Skybox::Skybox(Camera* cameraN)
 void Skybox::Update(double dt){
 	positionXYZ.x = camera->position().x+3*METER;
 	positionXYZ.z = camera->position().z-3*METER;
+
+	rotationXYZ = glm::vec3(0.0f,1.0f,0.0f);
+	rotation += dt*5.0f;
 	/*position = glm::mat4();
 	position *=camera->orientation();
 	position = glm::translate(position, positionXYZ);*/

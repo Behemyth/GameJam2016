@@ -21,7 +21,7 @@ NavMesh::NavMesh(char * name){
 		}
 		neighbors.push_back(neighborsOfi);
 	}
-	std::cout << neighbors.size() << std::endl;
+	//std::cout << neighbors.size() << std::endl;
 	textureName = "dirt.jpg";
 	Load();
 }
@@ -150,15 +150,15 @@ int NavMesh::indexIndex(Face& i) {
 }
 
 void printNode(Node& n) {
-	std::cout << n.v.indices[0] << ", " << n.v.indices[1] << ", " << n.v.indices[2] << std::endl;
+	//std::cout << n.v.indices[0] << ", " << n.v.indices[1] << ", " << n.v.indices[2] << std::endl;
 }
 
 
 
 std::vector<Face> NavMesh::findPath(std::vector<Face>& path, Node& first, Node& last) {
 	Node q = last;
-	std::cout << "first: ";  printNode(first);
-	std::cout << "last: ";  printNode(last);
+//	std::cout << "first: ";  printNode(first);
+//	std::cout << "last: ";  printNode(last);
 	while (q.parent != NULL && !(q == first)) {
 		printNode(q);
 		path.push_back(q.v);
@@ -243,7 +243,7 @@ void NavMesh::shortestPathHelper(std::vector<Face>& path, Face& start, Face& end
 			}
 		}
 	} 
-	std::cout << "FAILED TO FIND PATH" << std::endl; 
+	//std::cout << "FAILED TO FIND PATH" << std::endl; 
 }
 
 
