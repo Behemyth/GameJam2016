@@ -2,8 +2,11 @@
 #include "rand.h"
 
 
-Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, NavMesh* n,float sizeN,Character* mainC1)
+Character::Character(float fps1, int frameS, int stanceS, char* texName, bool AI, NavMesh* n, float sizeN, Character* mainC1, char* bSound1, char* fSound1)
 {
+	bSound = bSound1;
+	fSound = fSound1;
+	thisTrigger = 0;
 	end = false;
 	amount = 0;
 	timeCounter = 0;
@@ -87,6 +90,16 @@ void Character::Update(double dt){
 				mainC->amount++;
 				parent = mainC->tail;
 				mainC->tail = this;
+				thisTrigger = posStorage.size();
+				
+
+				irrklang::ISound* s = soundB->play3D(bSound, irrklang::vec3df(0.0f, 0.0f, 0.0f), false, false, true);
+
+				if (s){
+					s->setVolume(1.0f);
+					s->setMinDistance(1.0f*KILOMETER);
+					s->setPosition(irrklang::vec3df(0, 0, 0));
+				}
 			}
 
 			if (vecsEqual(destination, positionXYZ)) {
@@ -183,6 +196,9 @@ void Character::Update(double dt){
 
 		if (p <= 1){
 			mainC->end = true;
+		}
+		if (p <= thisTrigger){
+			irrklang::ISound* s = soundF->play3D(fSound, irrklang::vec3df(0.0f, 0.0f, 0.0f), false, false, true);
 		}
 		glm::vec2 pos = posStorage[p];
 		positionXYZ.x = pos.x;

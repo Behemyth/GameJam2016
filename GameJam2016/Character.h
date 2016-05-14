@@ -6,7 +6,7 @@ class Character :
 	public Object
 {
 public:
-	Character(float fps, int, int, char*, bool, NavMesh*, float, Character*);
+	Character(float fps, int, int, char*, bool, NavMesh*, float, Character*,char* , char* );
 	~Character();
 	void UpdatePosition();
 	void Update(double dt);
@@ -17,8 +17,13 @@ public:
 	float timeCounter;
 	bool end;
 private:
-	
-	
+	char* bSound;
+	irrklang::ISoundEngine* soundB;
+
+	char* fSound;
+	irrklang::ISoundEngine* soundF;
+
+	int thisTrigger;
 	Character* mainC;
 	Character* tail;
 	Character* parent;
