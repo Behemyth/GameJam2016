@@ -187,7 +187,7 @@ void Character::Update(double dt){
 		glm::vec2 pos = posStorage[p];
 		positionXYZ.x = pos.x;
 		positionXYZ.z = pos.y;
-		mainC->timeCounter += 0.1;
+		mainC->timeCounter += 0.15;
 	}
 
 	Object::Flush();
