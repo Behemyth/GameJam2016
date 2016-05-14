@@ -90,14 +90,14 @@ void InitializeWindow() {
 	//if (window == FULLSCREEN) {
 
 	//	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-	//	mainThread = glfwCreateWindow(SCREEN_SIZE.x, SCREEN_SIZE.y, "LifeSim", glfwGetPrimaryMonitor(), NULL);
+	//	mainThread = glfwCreateWindow(SCREEN_SIZE.x, SCREEN_SIZE.y, "Space Trip 2: Superstitious Trip", glfwGetPrimaryMonitor(), NULL);
 
 	//}
 	//else if (window == WINDOWED) {
 		//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-		//mainThread = glfwCreateWindow(SCREEN_SIZE.x, SCREEN_SIZE.y, "LifeSim", glfwGetPrimaryMonitor(), NULL);
+		//mainThread = glfwCreateWindow(SCREEN_SIZE.x, SCREEN_SIZE.y, "Space Trip 2: Superstitious Trip", glfwGetPrimaryMonitor(), NULL);
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
-	mainThread = glfwCreateWindow(SCREEN_SIZE.x, SCREEN_SIZE.y, "LifeSim", NULL, NULL);
+	mainThread = glfwCreateWindow(SCREEN_SIZE.x, SCREEN_SIZE.y, "Space Trip 2: Superstitious Trip", NULL, NULL);
 
 	//}
 	//else if (BORDERLESS) {
@@ -192,25 +192,47 @@ void Run() {
 	Object* landMP = landM;
 	objects.push_back(landMP);
 
-	Character* carM = new Character(5,4,4,"CatSheet.png",true,navM,1.0f);
+	Character* mainC = new Character(5, 4, 4, "MainSheet.png", false, navM,1.5f,NULL);
+	Object* mainCP = mainC;
+	objects.push_back(mainCP);
+
+	Character* carM = new Character(5, 4, 4, "CatSheet.png", true, navM, 1.0f, mainC);
 	Object* nCar = carM;
 	objects.push_back(nCar);
 
-	Character* carM1 = new Character(5, 4, 4, "SaltSheet.png", true, navM, 1.0f);
+	Character* carM1 = new Character(5, 4, 4, "SaltSheet.png", true, navM, 1.0f, mainC);
 	Object* nCar1 = carM1;
 	objects.push_back(nCar1);
 
-	Character* carM2 = new Character(5, 4, 4, "MirrorSheet.png", true, navM, 1.0f);
+	Character* carM2 = new Character(5, 4, 4, "MirrorSheet.png", true, navM, 1.0f, mainC);
 	Object* nCar2 = carM2;
 	objects.push_back(nCar2);
 
-	Character* carM3 = new Character(5, 4, 4, "CrowSheet.png", true, navM, 1.0f);
+	Character* carM3 = new Character(5, 4, 4, "CrowSheet.png", true, navM, 1.0f, mainC);
 	Object* nCar3 = carM3;
 	objects.push_back(nCar3);
 
-	Character* mainC = new Character(5, 4, 4, "MainSheet.png", false, navM,1.5f);
-	Object* mainCP = mainC;
-	objects.push_back(mainCP);
+
+	Character* carM4 = new Character(5, 4, 4, "MirrorSheet2.png", true, navM, 1.0f, mainC);
+	Object* nCar4 = carM4;
+	objects.push_back(nCar4);
+
+	Character* carM5 = new Character(5, 4, 4, "MirrorSheet3.png", true, navM, 1.0f, mainC);
+	Object* nCar5 = carM5;
+	objects.push_back(nCar5);
+
+	Character* carM6 = new Character(5, 4, 4, "CatSheet2.png", true, navM, 1.0f, mainC);
+	Object* nCar6 = carM6;
+	objects.push_back(nCar6);
+
+	Character* carM7 = new Character(5, 4, 4, "CrowSheet2.png", true, navM, 1.0f, mainC);
+	Object* nCar7 = carM7;
+	objects.push_back(nCar7);
+
+	Character* carM8 = new Character(5, 4, 4, "SaltSheet2.png", true, navM, 1.0f, mainC);
+	Object* nCar8 = carM8;
+	objects.push_back(nCar8);
+
 	playa = mainC;
 	//timer info for loop
 	double t = 0.0f;
@@ -245,7 +267,9 @@ void Run() {
 			MouseInput();//update mouse change
 			glfwPollEvents(); //executes all set input callbacks
 
-			CameraInput(); //bypasses input system for direct camera manipulation
+			if (mainC->amount<9){
+				CameraInput(); //bypasses input system for direct camera manipulation
+			}
 			camera.ExtractPosition(mainCP->GetPosition());
 
 			Update(deltaTime*timeMod); //updates all objects based on the constant deltaTime.
