@@ -70,7 +70,7 @@ void InitializeWindow() {
 
 	engine = irrklang::createIrrKlangDevice();
 	engine->setSoundVolume(1.0f);
-	music = engine->play3D("LookingShady.mp3",
+	music = engine->play3D("Looking Shady.mp3",
 		irrklang::vec3df(0, 0, 0), true, false, true);
 	if (music){
 
@@ -208,44 +208,44 @@ void Run() {
 	Object* landMP = landM;
 	objects.push_back(landMP);
 
-	Character* mainC = new Character(5, 4, 4, "MainSheet.png", false, navM,1.5f,NULL,NULL,"urgleburgle.wav");
+	Character* mainC = new Character(5, 4, 4, "MainSheet.png", false, navM, 1.5f, NULL, NULL, "urgleburgle.wav", engine);
 	Object* mainCP = mainC;
 	objects.push_back(mainCP);
 
-	Character* carM = new Character(5, 4, 4, "CatSheet.png", true, navM, 1.0f, mainC, "sound1back.wav", "sound1.wav");
+	Character* carM = new Character(5, 4, 4, "CatSheet.png", true, navM, 1.0f, mainC, "sound1back.wav", "sound1.wav", engine);
 	Object* nCar = carM;
 	objects.push_back(nCar);
 
-	Character* carM1 = new Character(5, 4, 4, "SaltSheet.png", true, navM, 1.0f, mainC, "sound2back,wav", "sound2.wav");
+	Character* carM1 = new Character(5, 4, 4, "SaltSheet.png", true, navM, 1.0f, mainC, "sound2back,wav", "sound2.wav", engine);
 	Object* nCar1 = carM1;
 	objects.push_back(nCar1);
 
-	Character* carM2 = new Character(5, 4, 4, "MirrorSheet.png", true, navM, 1.0f, mainC, "sound3back.wav", "sound3.wav");
+	Character* carM2 = new Character(5, 4, 4, "MirrorSheet.png", true, navM, 1.0f, mainC, "sound3back.wav", "sound3.wav", engine);
 	Object* nCar2 = carM2;
 	objects.push_back(nCar2);
 
-	Character* carM3 = new Character(5, 4, 4, "CrowSheet.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav");
+	Character* carM3 = new Character(5, 4, 4, "CrowSheet.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav", engine);
 	Object* nCar3 = carM3;
 	objects.push_back(nCar3);
 
 
-	Character* carM4 = new Character(5, 4, 4, "MirrorSheet2.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav");
+	Character* carM4 = new Character(5, 4, 4, "MirrorSheet2.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav", engine);
 	Object* nCar4 = carM4;
 	objects.push_back(nCar4);
 
-	Character* carM5 = new Character(5, 4, 4, "MirrorSheet3.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav");
+	Character* carM5 = new Character(5, 4, 4, "MirrorSheet3.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav", engine);
 	Object* nCar5 = carM5;
 	objects.push_back(nCar5);
 
-	Character* carM6 = new Character(5, 4, 4, "CatSheet2.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav");
+	Character* carM6 = new Character(5, 4, 4, "CatSheet2.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav", engine);
 	Object* nCar6 = carM6;
 	objects.push_back(nCar6);
 
-	Character* carM7 = new Character(5, 4, 4, "CrowSheet2.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav");
+	Character* carM7 = new Character(5, 4, 4, "CrowSheet2.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav", engine);
 	Object* nCar7 = carM7;
 	objects.push_back(nCar7);
 
-	Character* carM8 = new Character(5, 4, 4, "SaltSheet2.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav");
+	Character* carM8 = new Character(5, 4, 4, "SaltSheet2.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav", engine);
 	Object* nCar8 = carM8;
 	objects.push_back(nCar8);
 
