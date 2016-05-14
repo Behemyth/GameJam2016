@@ -26,7 +26,10 @@ void Camera::DetachCamera(){
 	isAttached = false;
 	cameraExtract = NULL;
 }
-
+void Camera::ExtractPosition(glm::vec3 obj){
+	_position.x = obj.x - (METER*1.5f);
+	_position.z = obj.z + (METER*1.5f);
+}
 void Camera::setOrientation(float setVerticle,float setHorizontal){
 	DetachCamera();
 	 _verticalAngle=setVerticle;
@@ -153,7 +156,8 @@ glm::mat4 Camera::matrix() const {
 		return cameraExtract->matrix();
 	}
    // glm::mat4 camera = glm::perspective(glm::radians(_fieldOfView.y), _viewportAspectRatio, _nearPlane, _farPlane);
-	glm::mat4 camera = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, _nearPlane, _farPlane);
+	float size = 0.1f;
+	glm::mat4 camera = glm::ortho(-_fieldOfView.x*size, _fieldOfView.x*size, -_fieldOfView.y*size, _fieldOfView.y*size, _nearPlane, _farPlane);
     camera *= orientation();
     camera = glm::translate(camera, -_position);
     return camera;

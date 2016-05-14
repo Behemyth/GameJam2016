@@ -4,10 +4,11 @@
 
 #include <glm/glm.hpp>
 
+
     class Camera {
     public:
         Camera();
-
+		void ExtractPosition(glm::vec3);
 
 
 		bool isAttached;

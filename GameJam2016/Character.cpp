@@ -1,17 +1,22 @@
 #include "Character.h"
 
 
-Character::Character(float fps1)
+Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI)
 {
 	counter = 0;
+	isAI = AI;
+
 	float height = 1.0f;
 	fps = fps1;
-	framesSize = 1.0f / 4.0f;
-	stancesSize = 1.0f / 4.0f;
+	framesSize = 1.0f / frameS;
+	stancesSize = 1.0f / stanceS;
 	curStance = 0;
 	curFrame = 0;
 
 	fragmentName = "fragment-shader[none].txt";
+
+	position = glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, 0.0f));
+
 
 	GetVertices().push_back({ { -height / 2.0f, height, 0.0f }, { (curFrame*framesSize), ((curStance + 1)*stancesSize) }, { 0.0f, 1.0f, 0.0f } });
 	GetVertices().push_back({ { height / 2.0f, height, 0.0f }, { ((curFrame + 1)*framesSize), ((curStance + 1)*stancesSize) }, { 0.0f, 1.0f, 0.0f } });
@@ -21,13 +26,19 @@ Character::Character(float fps1)
 	GetIndices().push_back({ glm::uvec3(2, 0, 1) });
 	GetIndices().push_back({ glm::uvec3(2, 1, 3) });
 
-	textureName = "CatSheet.png";
+	textureName = texName;
 	Load();
 
 }
 
 void Character::Update(double dt){
 	counter += fps*dt;
+
+	if (isAI){
+
+
+	}
+
 
 	if (counter>=1.0f){
 		counter = 0.0f;

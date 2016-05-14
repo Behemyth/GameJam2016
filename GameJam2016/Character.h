@@ -4,7 +4,7 @@ class Character :
 	public Object
 {
 public:
-	Character(float fps);
+	Character(float fps,int,  int, char*,bool);
 	~Character();
 	void Update(double dt);
 private:
@@ -13,6 +13,9 @@ private:
 	float framesSize;
 	float stancesSize;
 
+	glm::vec3 normalizedDirection;
+
+	bool isAI;
 	int curStance;
 	int curFrame;
 
