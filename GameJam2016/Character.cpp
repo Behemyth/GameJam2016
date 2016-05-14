@@ -5,7 +5,6 @@
 Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, NavMesh* n,float sizeN)
 {
 	nm = n;
-
 	counter = 0;
 	isAI = AI;
 
@@ -18,12 +17,16 @@ Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, Na
 
 	fragmentName = "fragment-shader[none].txt";
 
-	rotationXYZ = glm::vec3(0.0f, 1.0f, 0.0f);
-	rotation = -45.0f;
 	sizeXYZ = glm::vec3(sizeN);
-	position = glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, 0.0f));
+
 	destination = glm::vec3(0.0f, 0.0f, 0.0f);
-	positionXYZ = glm::vec3(0.0f, 0.0f, 0.0f);
+	if (!AI){
+		positionXYZ = glm::vec3(0.0f, height/2.0f, 0.0f);
+	}
+	else{
+		positionXYZ = glm::vec3(0.0f, 0.0f, 0.0f);
+
+	}
 
 
 	GetVertices().push_back({ { -height / 2.0f, height, 0.0f }, { (curFrame*framesSize), ((curStance + 1)*stancesSize) }, { 0.0f, 1.0f, 0.0f } });
@@ -43,23 +46,23 @@ void Character::Update(double dt){
 	counter += fps*dt;
 
 	if (isAI){
-		if (positionXYZ == destination || path.size() <= 0) {
-			std::uniform_int_distribution<int> distro(0, nm->GetVertices().size()-1);
-			int vertexNum = GetDistribution(distro);
-			destination = nm->GetVertices()[vertexNum].position;
-			//destination = glm::vec3(0.2, 0.2, 0.2);
-			path = nm->shortestPath(positionXYZ, destination);
-		}
-		glm::vec3 nextDest;
-		if (path.size() > 0) {
-			nextDest = nm->center(path.front());
-			path.erase(path.begin());
-		}
-		if (path.size() == 0) {
-			nextDest = destination;
-		}
-		normalizedDirection = glm::normalize(nextDest - positionXYZ);
-		positionXYZ = positionXYZ + (normalizedDirection * float(dt) * float(0.1*METER));
+		//if (positionXYZ == destination || path.size() <= 0) {
+		//	std::uniform_int_distribution<int> distro(0, nm->GetVertices().size()-1);
+		//	int vertexNum = GetDistribution(distro);
+		//	destination = nm->GetVertices()[vertexNum].position;
+		//	//destination = glm::vec3(0.2, 0.2, 0.2);
+		//	path = nm->shortestPath(positionXYZ, destination);
+		//}
+		//glm::vec3 nextDest;
+		//if (path.size() > 0) {
+		//	nextDest = nm->center(path.front());
+		//	path.erase(path.begin());
+		//}
+		//if (path.size() == 0) {
+		//	nextDest = destination;
+		//}
+		//normalizedDirection = glm::normalize(nextDest - positionXYZ);
+		//positionXYZ = positionXYZ + (normalizedDirection * float(dt) * float(0.1*METER));
 	}
 	else{
 		normalizedDirection = glm::normalize(normalizedDirection);
@@ -96,10 +99,23 @@ void Character::Update(double dt){
 	}
 	}
 
+//	position = glm::translate(glm::mat4(), positionXYZ);
+////	position = glm::rotate(position, glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 1.0f));
+//	position = glm::rotate(position, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+//
+//	position = glm::scale(position, sizeXYZ);
+
+
 	Object::Flush();
 	Object::Update(dt);
 }
 
+void Character::UpdatePosition(){
+	position = glm::translate(glm::mat4(), positionXYZ);
+	position = glm::rotate(position, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	position = glm::rotate(position, glm::radians(-45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	position = glm::scale(position, sizeXYZ);
+}
 Character::~Character()
 {
 }

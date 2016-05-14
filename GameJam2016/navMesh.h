@@ -22,15 +22,15 @@ public:
 	bool inMesh(glm::vec3& v);
 	bool inFace(Face& f, glm::vec3& v);
 
-	//A* FUNCTIONS ------------------------------------------------------------------------------
-	bool areNeighbors(Face& a, Face& b);
-	void shortestPathHelper(std::vector<Face>& path, Face& start, Face& end);
-	std::vector<Face> shortestPath(glm::vec3& start, glm::vec3& end);
-	int indexIndex(Face& v);
-	glm::vec3 center(Face& a);
-	float distance(Node& a, Node& b);
-	std::vector<Face> findPath(std::vector<Face>& path, Node& first, Node& last);
-	std::vector<Face> findPath2(std::vector<Face>& path, std::map<Node, Node*> m, Node& last);
+	////A* FUNCTIONS ------------------------------------------------------------------------------
+	//bool areNeighbors(Face& a, Face& b);
+	//void shortestPathHelper(std::vector<Face>& path, Face& start, Face& end);
+	//std::vector<Face> shortestPath(glm::vec3& start, glm::vec3& end);
+	//int indexIndex(Face& v);
+	//glm::vec3 center(Face& a);
+	//float distance(Node& a, Node& b);
+	//std::vector<Face> findPath(std::vector<Face>& path, Node& first, Node& last);
+	//std::vector<Face> findPath2(std::vector<Face>& path, std::map<Node, Node*> m, Node& last);
 	//--------------------------------------------------------------------------------------------
 private:
 	std::vector< std::vector<Face> > neighbors;
