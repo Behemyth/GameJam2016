@@ -17,10 +17,11 @@ public:
 	float timeCounter;
 	bool end;
 	irrklang::ISoundEngine* sound;
-private:
 	char* bSound;
 
 	char* fSound;
+private:
+	
 	bool once;
 	int thisTrigger;
 	Character* mainC;

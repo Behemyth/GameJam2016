@@ -216,7 +216,7 @@ void Run() {
 	Object* nCar = carM;
 	objects.push_back(nCar);
 
-	Character* carM1 = new Character(5, 4, 4, "SaltSheet.png", true, navM, 1.0f, mainC, "sound2back,wav", "sound2.wav", engine);
+	Character* carM1 = new Character(5, 4, 4, "SaltSheet.png", true, navM, 1.0f, mainC, "sound2back.wav", "sound2.wav", engine);
 	Object* nCar1 = carM1;
 	objects.push_back(nCar1);
 
@@ -283,13 +283,39 @@ void Run() {
 			MouseInput();//update mouse change
 			glfwPollEvents(); //executes all set input callbacks
 
-			if (mainC->amount<9){
+			if (mainC->amount<9 && !engine->isCurrentlyPlaying(carM->bSound) && !engine->isCurrentlyPlaying(carM->fSound) &&
+				!engine->isCurrentlyPlaying(carM1->bSound) && !engine->isCurrentlyPlaying(carM1->fSound) &&
+				!engine->isCurrentlyPlaying(carM2->bSound) && !engine->isCurrentlyPlaying(carM2->fSound) &&
+				!engine->isCurrentlyPlaying(carM3->bSound) && !engine->isCurrentlyPlaying(carM3->fSound) &&
+				!engine->isCurrentlyPlaying(carM4->bSound) && !engine->isCurrentlyPlaying(carM4->fSound) &&
+				!engine->isCurrentlyPlaying(carM5->bSound) && !engine->isCurrentlyPlaying(carM5->fSound) &&
+				!engine->isCurrentlyPlaying(carM6->bSound) && !engine->isCurrentlyPlaying(carM6->fSound) &&
+				!engine->isCurrentlyPlaying(carM7->bSound) && !engine->isCurrentlyPlaying(carM7->fSound) &&
+				!engine->isCurrentlyPlaying(carM8->bSound) && !engine->isCurrentlyPlaying(carM8->fSound)){
+				music->setIsPaused(false);
+
 				CameraInput(); //bypasses input system for direct camera manipulation
+			}
+			else{
+				music->setIsPaused(true);
 			}
 			camera.ExtractPosition(mainCP->GetPosition());
 
-			Update(deltaTime*timeMod); //updates all objects based on the constant deltaTime.
-			
+			if (!engine->isCurrentlyPlaying(carM->bSound) && !engine->isCurrentlyPlaying(carM->fSound) &&
+				!engine->isCurrentlyPlaying(carM1->bSound) && !engine->isCurrentlyPlaying(carM1->fSound) &&
+				!engine->isCurrentlyPlaying(carM2->bSound) && !engine->isCurrentlyPlaying(carM2->fSound) &&
+				!engine->isCurrentlyPlaying(carM3->bSound) && !engine->isCurrentlyPlaying(carM3->fSound) &&
+				!engine->isCurrentlyPlaying(carM4->bSound) && !engine->isCurrentlyPlaying(carM4->fSound) &&
+				!engine->isCurrentlyPlaying(carM5->bSound) && !engine->isCurrentlyPlaying(carM5->fSound) &&
+				!engine->isCurrentlyPlaying(carM6->bSound) && !engine->isCurrentlyPlaying(carM6->fSound) &&
+				!engine->isCurrentlyPlaying(carM7->bSound) && !engine->isCurrentlyPlaying(carM7->fSound) &&
+				!engine->isCurrentlyPlaying(carM8->bSound) && !engine->isCurrentlyPlaying(carM8->fSound)){
+				music->setIsPaused(false);
+				Update(deltaTime*timeMod); //updates all objects based on the constant deltaTime.
+			}
+			else{
+				music->setIsPaused(true);
+			}
 			GetPositions(); //transforms bullet matrices to opengl
 
 

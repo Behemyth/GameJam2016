@@ -96,12 +96,6 @@ void Character::Update(double dt){
 				
 
 				irrklang::ISound* s = sound->play3D(bSound, irrklang::vec3df(0.0f, 0.0f, 0.0f), false, false, true);
-
-				if (s){
-					s->setVolume(1.0f);
-					s->setMinDistance(1.0f*KILOMETER);
-					s->setPosition(irrklang::vec3df(0, 0, 0));
-				}
 			}
 
 			if (vecsEqual(destination, positionXYZ)) {
@@ -200,6 +194,7 @@ void Character::Update(double dt){
 		if (p <= thisTrigger&&once){
 			once = false;
 			irrklang::ISound* s = sound->play3D(fSound, irrklang::vec3df(0.0f, 0.0f, 0.0f), false, false, true);
+
 		}
 		if (p <= 0){
 			mainC->end = true;
@@ -208,7 +203,7 @@ void Character::Update(double dt){
 		glm::vec2 pos = posStorage[p];
 		positionXYZ.x = pos.x;
 		positionXYZ.z = pos.y;
-		mainC->timeCounter += 0.15;
+		mainC->timeCounter += 0.20;
 	}
 
 	Object::Flush();
