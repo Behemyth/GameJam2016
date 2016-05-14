@@ -24,7 +24,7 @@ NavMesh::NavMesh(){
 	Load();
 }
 
-bool NavMesh::inMesh(Vertex& v) {
+bool NavMesh::inMesh(glm::vec3& v) {
 	for (int i = 0; i < GetIndices().size(); i++) {
 		if (inFace(GetIndices()[i], v)) {
 			return true;
@@ -34,7 +34,7 @@ bool NavMesh::inMesh(Vertex& v) {
 }
 
 
-bool NavMesh::inFace(Face& f, Vertex& p) {
+bool NavMesh::inFace(Face& f, glm::vec3& p) {
 	// Compute vectors
 	glm::vec3 a = GetVertices()[f.indices.x].position;
 	glm::vec3 b = GetVertices()[f.indices.y].position;
@@ -42,7 +42,7 @@ bool NavMesh::inFace(Face& f, Vertex& p) {
 	
 	glm::vec3 v0 = c - a;
 	glm::vec3 v1 = b - a;
-	glm::vec3 v2 = p.position - a;
+	glm::vec3 v2 = p - a;
 
 	// Compute dot products
 	float dot00 = dot(v0, v0);
@@ -161,7 +161,7 @@ void NavMesh::shortestPathHelper(std::vector<Face>& path, Face& start, Face& end
 	}
 }
 
-std::vector<Face> NavMesh::shortestPath(Vertex& start, Vertex& end) {
+std::vector<Face> NavMesh::shortestPath(glm::vec3& start, glm::vec3& end) {
 	std::vector<Face> path;
 	Face first;
 	Face last;

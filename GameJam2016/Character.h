@@ -1,10 +1,12 @@
 #pragma once
 #include "Object.h"
+#include "NavMesh.h"
+
 class Character :
 	public Object
 {
 public:
-	Character(float fps,int,  int, char*,bool);
+	Character(float fps,int,  int, char*,bool, NavMesh*);
 	~Character();
 	void Update(double dt);
 private:
@@ -13,7 +15,10 @@ private:
 	float framesSize;
 	float stancesSize;
 
+	NavMesh* nm;
+
 	glm::vec3 normalizedDirection;
+	Vertex destination;
 
 	bool isAI;
 	int curStance;
