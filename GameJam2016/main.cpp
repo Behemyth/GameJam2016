@@ -35,6 +35,9 @@ bool wireframeToggle;
 double wireframeTimer;
 std::vector<Object*> objects;
 
+irrklang::ISoundEngine* engine;
+irrklang::ISound* music;
+
 Character* playa=NULL;
 
 void Terminate() {
@@ -64,6 +67,19 @@ void ToggleWireFrame(){
 	}
 }
 void InitializeWindow() {
+
+	engine = irrklang::createIrrKlangDevice();
+	engine->setSoundVolume(1.0f);
+	music = engine->play3D("LookingShady.mp3",
+		irrklang::vec3df(0, 0, 0), true, false, true);
+	if (music){
+
+		music->setMinDistance(1.0f*KILOMETER);
+		music->setPosition(irrklang::vec3df(0, 0, 0));
+		music->setVolume(0.35f);
+	}
+
+
 	wireframeToggle = false;
 	seed = time(NULL);
 	runPhysics = false;
