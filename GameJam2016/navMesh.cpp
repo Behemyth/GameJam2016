@@ -52,20 +52,36 @@ float NavMesh::distance(const Node& a, const Node& b) {
 	return sqrt(pow(amid.x - bmid.x, 2) + pow(amid.y - bmid.y, 2) + pow(amid.z - bmid.z, 2));
 }
 
+/*bool NavMesh::faceEquals(const Face& a, const Face& b) {
+	for (int v = 0; v < 3; v++) {
+		if (GetVertices()[a.indices[v]] != GetVertices()[b.indices[v]]) {
+			return false;
+		}
+		return true;
+	}
+} */
+
 int NavMesh::indexIndex(const Face& i) {
 	for (int x = 0; x < GetIndices().size(); x++) {
-		for (int v = 0; v < 3; v++) {
-			if (GetVertices()[GetIndices()[x].indices[v]] != GetVertices()[i.indices[v]]) {
-				break;
-			}
+		if (GetIndices()[x] == i ) {
 			return x;
 		}
 	}
 	return -1;
 }
 
+std::vector<Face> NavMesh::findPath(std::vector<Face>& path, const Node& first, const Node& last) {
+	Node q = last;
+	while (!(q == first)) {
+		path.push_back(q.v);
+		q = *(q.parent);
+	}
+	path.push_back(q.v);
+
+}
+
 std::vector<Face> NavMesh::shortestPath(const Face& start, const Face& end) {
-	std::priority_queue<Node, std::vector<Node>, sortF> openList;
+	std::set<Node, sortF> openList;
 	std::set<Node> closedList;
 	std::vector<Face> path;
 
@@ -77,44 +93,35 @@ std::vector<Face> NavMesh::shortestPath(const Face& start, const Face& end) {
 	last.v = end;
 	first.h = distance(first, last);
 
-	openList.push(first);
+	openList.insert(first);
 
 	while (!openList.empty()) {
-		Node q = openList.top();
-		openList.pop();
+		Node q = *(openList.begin());
+		openList.erase(openList.begin());;
 		std::vector<Face> children = neighbors[indexIndex(q.v)];
 		for (int i = 0; i < children.size(); i++) {
 			Node child;
 			child.v = children[i];
 			child.parent = &q;
-			for (int v = 0; v < 3; v++) {
-				if () {
-					break;
-				}
+			if (child.v == last.v) {
+				findPath(path, first, last);
 				return path;
 			}
+			child.g = q.g + distance(child, q);
+			child.h = distance(child, last);
+			child.f = child.g + child.h;
 
-			
+			if ( (openList.find(child) != openList.end()) && ((*openList.find(child)).f < child.f) ) {
+				continue;
+			}
+			if ((closedList.find(child) != closedList.end()) && ((*closedList.find(child)).f < child.f)) {
+				continue;
+			}
+			openList.insert(child);
 		}
+		closedList.insert(q);
 	}
 
 
 }
 
-
-/*
-generate q's 8 successors and set their parents to q
-for each successor
-if successor is the goal, stop the search
-successor.g = q.g + distance between successor and q
-successor.h = distance from goal to successor
-successor.f = successor.g + successor.h
-
-if a node with the same position as successor is in the OPEN list \
-which has a lower f than successor, skip this successor
-if a node with the same position as successor is in the CLOSED list \
-which has a lower f than successor, skip this successor
-otherwise, add the node to the open list
-end
-push q on the closed list
-*/
