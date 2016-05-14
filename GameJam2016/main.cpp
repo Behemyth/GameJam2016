@@ -212,40 +212,40 @@ void Run() {
 	Object* mainCP = mainC;
 	objects.push_back(mainCP);
 
-	Character* carM = new Character(5, 4, 4, "CatSheet.png", true, navM, 1.0f, mainC, "", "");
+	Character* carM = new Character(5, 4, 4, "CatSheet.png", true, navM, 1.0f, mainC, "sound1back.wav", "sound1.wav");
 	Object* nCar = carM;
 	objects.push_back(nCar);
 
-	Character* carM1 = new Character(5, 4, 4, "SaltSheet.png", true, navM, 1.0f, mainC, "sound2back,wav", "");
+	Character* carM1 = new Character(5, 4, 4, "SaltSheet.png", true, navM, 1.0f, mainC, "sound2back,wav", "sound2.wav");
 	Object* nCar1 = carM1;
 	objects.push_back(nCar1);
 
-	Character* carM2 = new Character(5, 4, 4, "MirrorSheet.png", true, navM, 1.0f, mainC, "sound3back", "sound3");
+	Character* carM2 = new Character(5, 4, 4, "MirrorSheet.png", true, navM, 1.0f, mainC, "sound3back.wav", "sound3.wav");
 	Object* nCar2 = carM2;
 	objects.push_back(nCar2);
 
-	Character* carM3 = new Character(5, 4, 4, "CrowSheet.png", true, navM, 1.0f, mainC, "", "");
+	Character* carM3 = new Character(5, 4, 4, "CrowSheet.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav");
 	Object* nCar3 = carM3;
 	objects.push_back(nCar3);
 
 
-	Character* carM4 = new Character(5, 4, 4, "MirrorSheet2.png", true, navM, 1.0f, mainC, "", "");
+	Character* carM4 = new Character(5, 4, 4, "MirrorSheet2.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav");
 	Object* nCar4 = carM4;
 	objects.push_back(nCar4);
 
-	Character* carM5 = new Character(5, 4, 4, "MirrorSheet3.png", true, navM, 1.0f, mainC, "", "");
+	Character* carM5 = new Character(5, 4, 4, "MirrorSheet3.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav");
 	Object* nCar5 = carM5;
 	objects.push_back(nCar5);
 
-	Character* carM6 = new Character(5, 4, 4, "CatSheet2.png", true, navM, 1.0f, mainC, "", "");
+	Character* carM6 = new Character(5, 4, 4, "CatSheet2.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav");
 	Object* nCar6 = carM6;
 	objects.push_back(nCar6);
 
-	Character* carM7 = new Character(5, 4, 4, "CrowSheet2.png", true, navM, 1.0f, mainC, "", "");
+	Character* carM7 = new Character(5, 4, 4, "CrowSheet2.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav");
 	Object* nCar7 = carM7;
 	objects.push_back(nCar7);
 
-	Character* carM8 = new Character(5, 4, 4, "SaltSheet2.png", true, navM, 1.0f, mainC, "", "");
+	Character* carM8 = new Character(5, 4, 4, "SaltSheet2.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav");
 	Object* nCar8 = carM8;
 	objects.push_back(nCar8);
 
