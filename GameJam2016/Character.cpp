@@ -2,7 +2,7 @@
 #include "rand.h"
 
 
-Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, NavMesh* n,float sizeN)
+Character::Character(float fps1, int frameS, int stanceS, char* texName, bool AI, NavMesh* n, float sizeN)
 {
 	nm = n;
 	counter = 0;
@@ -61,15 +61,6 @@ void Character::Update(double dt){
 	counter += fps*dt;
 
 	if (isAI){
-
-		char* filename = "";
-		irrklang::ISound* s = sound->play3D(filename, irrklang::vec3df(translate.x, translate.y, translate.z), false, false, true);
-
-		if (s){
-			s->setVolume(1.0f);
-			s->setMinDistance(1.0f*KILOMETER);
-			s->setPosition(irrklang::vec3df(0, 0, 0));
-		}
 		
 		if (vecsEqual(destination, positionXYZ)) {
 			std::vector<Face> neighbors = nm->findNeighbors(positionXYZ);
