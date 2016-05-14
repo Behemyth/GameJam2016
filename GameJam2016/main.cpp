@@ -42,11 +42,7 @@ Character* playa=NULL;
 
 void Terminate() {
 	glfwTerminate();
-	delete music;
-	delete engine;
-	for (int i = 0; i < objects.size(); i++){
-		delete objects[i];
-	}
+
 	exit(0);
 }
 
@@ -97,8 +93,8 @@ void InitializeWindow() {
 
 	//set screen size
 	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-	//SCREEN_SIZE = glm::uvec2(mode->width, mode->height);
-	SCREEN_SIZE = glm::uvec2(1280, 720);
+	SCREEN_SIZE = glm::uvec2(mode->width, mode->height);
+	//SCREEN_SIZE = glm::uvec2(1280, 720);
 
 	//basic aa done for us ;D
 	glfwWindowHint(GLFW_SAMPLES, 16);
@@ -115,10 +111,10 @@ void InitializeWindow() {
 
 	//}
 	//else if (window == WINDOWED) {
-		//glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-		//mainThread = glfwCreateWindow(SCREEN_SIZE.x, SCREEN_SIZE.y, "Space Trip 2: Superstitious Trip", glfwGetPrimaryMonitor(), NULL);
-	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
-	mainThread = glfwCreateWindow(SCREEN_SIZE.x, SCREEN_SIZE.y, "Space Trip 2: Superstitious Trip", NULL, NULL);
+		glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+		mainThread = glfwCreateWindow(SCREEN_SIZE.x, SCREEN_SIZE.y, "Space Trip 2: Superstitious Trip", glfwGetPrimaryMonitor(), NULL);
+	//glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+	//mainThread = glfwCreateWindow(SCREEN_SIZE.x, SCREEN_SIZE.y, "Space Trip 2: Superstitious Trip", NULL, NULL);
 
 	//}
 	//else if (BORDERLESS) {
@@ -320,11 +316,11 @@ void Run() {
 				tempRight = glm::normalize(tempRight);
 
 				if (flop){
-					camera.ExtractPosition(mainCP->GetPosition() + tempRight*METER*0.025f);
+					camera.ExtractPosition(mainCP->GetPosition() + tempRight*METER*0.01f);
 					flop = !flop;
 				}
 				else{
-					camera.ExtractPosition(mainCP->GetPosition()  -tempRight*METER*0.025f);
+					camera.ExtractPosition(mainCP->GetPosition()  -tempRight*METER*0.01f);
 					flop = !flop;
 				}
 			}
