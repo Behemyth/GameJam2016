@@ -96,4 +96,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="geometry-shader[basic].txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="vertex-shader[basic].txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="fragment-shader[basic].txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="fragment-shader[none].txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

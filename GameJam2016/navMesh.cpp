@@ -9,7 +9,13 @@ struct Node {
 	Vertex v;
 	float f, g, h;
 };
+NavMesh::NavMesh(){
 
+	ExtractFromFile("BasicNav.obj");
+
+	textureName = "dirt.jpg";
+	Load();
+}
 struct sortF {
 	bool operator() (const Node& a, const Node& b) {
 		return a.f < b.f;

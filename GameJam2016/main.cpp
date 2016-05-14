@@ -5,7 +5,7 @@
 #include "Camera.h"
 #include "Input.h"
 #include "Object.h"
-
+#include "navMesh.h"
 
 //Function List
 void Update(double);
@@ -174,15 +174,11 @@ void Run() {
 
 	glfwSetScrollCallback(mainThread, ScrollCallback);
 
+	NavMesh* navM = new NavMesh();
+	Object* nObj = navM;
+	objects.push_back(nObj);
 
 
-	//GLDebugDrawer debugDraw= GLDebugDrawer(&camera);
-
-	//debugDraw.DBG_DrawWireframe; 
-	//debugDraw.setDebugMode(btIDebugDraw::DBG_DrawWireframe);
-	//debugDraw.setDebugMode(1);
-
-	//world->setDebugDrawer(&debugDraw);
 
 	//timer info for loop
 	double t = 0.0f;
