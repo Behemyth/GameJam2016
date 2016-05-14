@@ -124,6 +124,7 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputHelper.cpp" />
+    <ClCompile Include="Landscape.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="navMesh.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="GlobalStructures.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputHelper.h" />
+    <ClInclude Include="Landscape.h" />
     <ClInclude Include="Metrics.h" />
     <ClInclude Include="navMesh.h" />
     <ClInclude Include="Object.h" />

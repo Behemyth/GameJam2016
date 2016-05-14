@@ -4,9 +4,9 @@
 class Skybox: public Object
 {
 public:
-	Skybox();
+	Skybox(Camera*);
 	~Skybox();
-
+	Camera* camera;
 	void Update(double);
 private:
 

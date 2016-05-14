@@ -66,10 +66,10 @@ void Object::ExtractFromFile(const char* name){
 
 void Object::Draw(Camera& camera)
 {
-
-	if (shader == NULL){
-		std::cout << "Forgot to call Load()" << std::endl;
-	}
+	if (!isGhost){
+		if (shader == NULL){
+			std::cout << "Forgot to call Load()" << std::endl;
+		}
 		shader->use();
 		glBindVertexArray(vao);
 		shader->setUniform(cameraUniform, camera.matrix());
@@ -90,6 +90,7 @@ void Object::Draw(Camera& camera)
 		glDrawElements(GL_TRIANGLES, (indices.size() * 3), GL_UNSIGNED_INT, (GLvoid*)0);
 		glBindVertexArray(0);
 		shader->stopUsing();
+	}
 }
 
 void Object::NormalizeScale(glm::vec3 scale){
@@ -152,9 +153,11 @@ void Object::Update(double dt){
 	
 }
 void Object::UpdatePosition(){
-	position = glm::translate(glm::mat4(), positionXYZ);
-	position = glm::rotate(position, glm::radians(rotation), rotationXYZ);
-	position = glm::scale(position, sizeXYZ);
+	if (!isStatic){
+		position = glm::translate(glm::mat4(), positionXYZ);
+		position = glm::rotate(position, glm::radians(rotation), rotationXYZ);
+		position = glm::scale(position, sizeXYZ);
+	}
 }
 std::vector<Face>& Object::GetIndices(){
 	return indices;

@@ -6,9 +6,10 @@
 #include "GlobalStructures.h"
 
 
-NavMesh::NavMesh(){
+NavMesh::NavMesh(char * name){
+	isGhost = true;
 
-	ExtractFromFile("BasicNav.obj");
+	ExtractFromFile(name);
 
 	for (int i = 0; i < GetIndices().size(); i++) {
 		for (int j = 0; j < GetIndices().size(); j++) {

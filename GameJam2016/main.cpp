@@ -6,6 +6,7 @@
 #include "Input.h"
 #include "Object.h"
 #include "navMesh.h"
+#include "Landscape.h"
 #include "Character.h"
 #include "Skybox.h"
 
@@ -178,14 +179,18 @@ void Run() {
 
 	glfwSetScrollCallback(mainThread, ScrollCallback);
 
-	//Skybox* hand = new Skybox();
-	//Object* handP = hand;
-	//objects.push_back(handP);
+	Skybox* hand = new Skybox(&camera);
+	Object* handP = hand;
+	objects.push_back(handP);
 
 
-	NavMesh* navM = new NavMesh();
+	NavMesh* navM = new NavMesh("Level1.obj");
 	Object* nObj = navM;
 	objects.push_back(nObj);
+
+	Landscape* landM = new Landscape("Level1Real.obj");
+	Object* landMP = landM;
+	objects.push_back(landMP);
 
 	Character* carM = new Character(5,4,4,"CatSheet.png",true,navM,1.0f);
 	Object* nCar = carM;

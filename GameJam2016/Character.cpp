@@ -17,7 +17,7 @@ Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, Na
 
 	fragmentName = "fragment-shader[none].txt";
 
-	rotationXYZ = glm::vec3(1.0f, 0.0f, 1.0f);
+	rotationXYZ = glm::vec3(0.0f, 1.0f, 0.0f);
 	rotation = -45.0f;
 	sizeXYZ = glm::vec3(sizeN);
 

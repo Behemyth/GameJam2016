@@ -17,7 +17,7 @@ struct Node {
 
 class NavMesh: public Object {
 public:
-	NavMesh();
+	NavMesh(char *);
 
 	bool inMesh(glm::vec3& v);
 	bool inFace(Face& f, glm::vec3& v);
