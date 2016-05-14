@@ -184,11 +184,11 @@ void Run() {
 	objects.push_back(handP);
 
 
-	NavMesh* navM = new NavMesh("BasicNav.obj");
+	NavMesh* navM = new NavMesh("Level1.obj");
 	Object* nObj = navM;
 	objects.push_back(nObj);
 
-	Landscape* landM = new Landscape("BasicNav.obj");
+	Landscape* landM = new Landscape("Level1Real.obj");
 	Object* landMP = landM;
 	objects.push_back(landMP);
 

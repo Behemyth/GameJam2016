@@ -19,14 +19,16 @@ Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, Na
 
 	sizeXYZ = glm::vec3(sizeN);
 
-	destination = glm::vec3(0.0f, 0.0f, 0.0f);
 	if (!AI){
 		positionXYZ = glm::vec3(0.0f, height/2.0f, 0.0f);
 	}
 	else{
-	positionXYZ = glm::vec3(0.0f, 0.0f, 0.0f);
+	std::uniform_int_distribution<int> distro(0, nm->GetIndices().size() - 1);
+	int faceNum = GetDistribution(distro);
+	Face start = nm->GetIndices()[faceNum];
+	positionXYZ = nm->center(start);
 	previous = nm->pointToFace(positionXYZ);
-
+	destination = positionXYZ;
 	}
 
 
@@ -44,9 +46,10 @@ Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, Na
 }
 
 bool vecsEqual(glm::vec3 a, glm::vec3 b) {
-	if (a.x > b.x - .01 && a.x < b.x + .01) {
-		if (a.y > b.y - .01 && a.y < b.y + .01) {
-			if (a.z>b.z - .01 && a.z < b.z + .01) {
+	float eps = 0.1f;
+	if (a.x > b.x - eps && a.x < b.x + eps) {
+		if (a.y > b.y - eps && a.y < b.y + eps) {
+			if (a.z>b.z - eps && a.z < b.z + eps) {
 				return true;
 			}
 		}
@@ -81,7 +84,7 @@ void Character::Update(double dt){
 			<< ", " << destination.x << " " << destination.y << " " << destination.z << std::endl;
 		}
 		normalizedDirection = glm::normalize(destination - positionXYZ);
-		positionXYZ = positionXYZ + (normalizedDirection * float(dt) * float(0.1*METER));
+		positionXYZ = positionXYZ + (normalizedDirection * float(dt) * float(0.15*METER));
 
 
 		/*if (positionXYZ == destination || path.size() <= 0) {
