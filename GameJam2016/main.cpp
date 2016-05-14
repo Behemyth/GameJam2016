@@ -208,44 +208,44 @@ void Run() {
 	Object* landMP = landM;
 	objects.push_back(landMP);
 
-	Character* mainC = new Character(5, 4, 4, "MainSheet.png", false, navM,1.5f,NULL);
+	Character* mainC = new Character(5, 4, 4, "MainSheet.png", false, navM,1.5f,NULL,NULL,"urgleburgle.wav");
 	Object* mainCP = mainC;
 	objects.push_back(mainCP);
 
-	Character* carM = new Character(5, 4, 4, "CatSheet.png", true, navM, 1.0f, mainC);
+	Character* carM = new Character(5, 4, 4, "CatSheet.png", true, navM, 1.0f, mainC, "", "");
 	Object* nCar = carM;
 	objects.push_back(nCar);
 
-	Character* carM1 = new Character(5, 4, 4, "SaltSheet.png", true, navM, 1.0f, mainC);
+	Character* carM1 = new Character(5, 4, 4, "SaltSheet.png", true, navM, 1.0f, mainC, "sound2back,wav", "");
 	Object* nCar1 = carM1;
 	objects.push_back(nCar1);
 
-	Character* carM2 = new Character(5, 4, 4, "MirrorSheet.png", true, navM, 1.0f, mainC);
+	Character* carM2 = new Character(5, 4, 4, "MirrorSheet.png", true, navM, 1.0f, mainC, "sound3back", "sound3");
 	Object* nCar2 = carM2;
 	objects.push_back(nCar2);
 
-	Character* carM3 = new Character(5, 4, 4, "CrowSheet.png", true, navM, 1.0f, mainC);
+	Character* carM3 = new Character(5, 4, 4, "CrowSheet.png", true, navM, 1.0f, mainC, "", "");
 	Object* nCar3 = carM3;
 	objects.push_back(nCar3);
 
 
-	Character* carM4 = new Character(5, 4, 4, "MirrorSheet2.png", true, navM, 1.0f, mainC);
+	Character* carM4 = new Character(5, 4, 4, "MirrorSheet2.png", true, navM, 1.0f, mainC, "", "");
 	Object* nCar4 = carM4;
 	objects.push_back(nCar4);
 
-	Character* carM5 = new Character(5, 4, 4, "MirrorSheet3.png", true, navM, 1.0f, mainC);
+	Character* carM5 = new Character(5, 4, 4, "MirrorSheet3.png", true, navM, 1.0f, mainC, "", "");
 	Object* nCar5 = carM5;
 	objects.push_back(nCar5);
 
-	Character* carM6 = new Character(5, 4, 4, "CatSheet2.png", true, navM, 1.0f, mainC);
+	Character* carM6 = new Character(5, 4, 4, "CatSheet2.png", true, navM, 1.0f, mainC, "", "");
 	Object* nCar6 = carM6;
 	objects.push_back(nCar6);
 
-	Character* carM7 = new Character(5, 4, 4, "CrowSheet2.png", true, navM, 1.0f, mainC);
+	Character* carM7 = new Character(5, 4, 4, "CrowSheet2.png", true, navM, 1.0f, mainC, "", "");
 	Object* nCar7 = carM7;
 	objects.push_back(nCar7);
 
-	Character* carM8 = new Character(5, 4, 4, "SaltSheet2.png", true, navM, 1.0f, mainC);
+	Character* carM8 = new Character(5, 4, 4, "SaltSheet2.png", true, navM, 1.0f, mainC, "", "");
 	Object* nCar8 = carM8;
 	objects.push_back(nCar8);
 
@@ -303,7 +303,13 @@ void Run() {
 		//draw
 		glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+		if (mainC->end){
+		glfwSwapBuffers(mainThread);
+		//final sound
+			while (true){
+				glfwPollEvents(); //executes all set input callbacks
+			}
+		}
 
 		Draw();
 		glfwSwapBuffers(mainThread);

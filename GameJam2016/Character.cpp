@@ -2,8 +2,12 @@
 #include "rand.h"
 
 
-Character::Character(float fps1, int frameS, int stanceS, char* texName, bool AI, NavMesh* n, float sizeN, Character* mainC1, irrklang::ISoundEngine* soundN)
+Character::Character(float fps1, int frameS, int stanceS, char* texName, bool AI, NavMesh* n, float sizeN, Character* mainC1, char* bSound1, char* fSound1)
 {
+	bSound = bSound1;
+	fSound = fSound1;
+	thisTrigger = 0;
+	end = false;
 	amount = 0;
 	timeCounter = 0;
 	forward = true;
@@ -38,14 +42,6 @@ Character::Character(float fps1, int frameS, int stanceS, char* texName, bool AI
 	previous = nm->pointToFace(positionXYZ);
 	destination = positionXYZ;
 	}
-
-
-	std::uniform_real_distribution<float> startDistro(-200 * METER, 200 * METER);
-
-	sound = soundN;
-	float transx = GetDistribution(startDistro);
-	float transy = GetDistribution(startDistro);
-	translate = glm::vec3(transx, 0.0f, transy);
 
 
 	GetVertices().push_back({ { -height / 2.0f, height, 0.0f }, { (curFrame*framesSize), ((curStance + 1)*stancesSize) }, { 0.0f, 1.0f, 0.0f } });
@@ -94,6 +90,16 @@ void Character::Update(double dt){
 				mainC->amount++;
 				parent = mainC->tail;
 				mainC->tail = this;
+				thisTrigger = posStorage.size();
+				
+
+				irrklang::ISound* s = soundB->play3D(bSound, irrklang::vec3df(0.0f, 0.0f, 0.0f), false, false, true);
+
+				if (s){
+					s->setVolume(1.0f);
+					s->setMinDistance(1.0f*KILOMETER);
+					s->setPosition(irrklang::vec3df(0, 0, 0));
+				}
 			}
 
 			if (vecsEqual(destination, positionXYZ)) {
@@ -186,10 +192,18 @@ void Character::Update(double dt){
 		posStorage.push_back(glm::vec2(positionXYZ.x, positionXYZ.z));
 	}
 	else{
-		glm::vec2 pos = posStorage[posStorage.size() - 1 - int(mainC->timeCounter)];
+		int p = posStorage.size() - 1 - int(mainC->timeCounter);
+
+		if (p <= 1){
+			mainC->end = true;
+		}
+		if (p <= thisTrigger){
+			irrklang::ISound* s = soundF->play3D(fSound, irrklang::vec3df(0.0f, 0.0f, 0.0f), false, false, true);
+		}
+		glm::vec2 pos = posStorage[p];
 		positionXYZ.x = pos.x;
 		positionXYZ.z = pos.y;
-		mainC->timeCounter += 1;
+		mainC->timeCounter += 0.15;
 	}
 
 	Object::Flush();
