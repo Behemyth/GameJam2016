@@ -34,6 +34,7 @@ bool wireframeToggle;
 double wireframeTimer;
 std::vector<Object*> objects;
 
+Object* playa=NULL;
 
 void Terminate() {
 	glfwTerminate();
@@ -193,7 +194,7 @@ void Run() {
 	Character* mainC = new Character(5, 4, 4, "CatSheet.png", false, navM);
 	Object* mainCP = mainC;
 	objects.push_back(mainCP);
-
+	playa = mainCP;
 	//timer info for loop
 	double t = 0.0f;
 	double currentTime = glfwGetTime();
@@ -282,40 +283,43 @@ void MouseInput() {
 	glfwSetCursorPos(mainThread, SCREEN_SIZE.x / 2.0f, SCREEN_SIZE.y / 2.0f);
 }
 void CameraInput() {
-	double moveSpeed;
-	if (glfwGetKey(mainThread, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-		//moveSpeed = 50 * METER * deltaTime;
-	}
-	else if (glfwGetKey(mainThread, GLFW_KEY_LEFT_ALT) == GLFW_PRESS) {
-		//moveSpeed = 1 * METER * deltaTime;
-	}
-	else {
-		//moveSpeed = 4.5 * METER * deltaTime;
-	}
+	if (playa != NULL){
+		double moveSpeed;
+		if (glfwGetKey(mainThread, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+			//moveSpeed = 50 * METER * deltaTime;
+		}
+		else if (glfwGetKey(mainThread, GLFW_KEY_LEFT_ALT) == GLFW_PRESS) {
+			//moveSpeed = 1 * METER * deltaTime;
+		}
+		else {
+			//moveSpeed = 4.5 * METER * deltaTime;
+		}
 
 
-	if (glfwGetKey(mainThread, GLFW_KEY_S) == GLFW_PRESS) {
-		//camera.offsetPosition(float(moveSpeed) * -camera.forward());
-	}
-	else if (glfwGetKey(mainThread, GLFW_KEY_W) == GLFW_PRESS) {
-		//camera.offsetPosition(float(moveSpeed) * camera.forward());
-	}
-	if (glfwGetKey(mainThread, GLFW_KEY_A) == GLFW_PRESS) {
-		//camera.offsetPosition(float(moveSpeed) * -camera.right());
-	}
-	else if (glfwGetKey(mainThread, GLFW_KEY_D) == GLFW_PRESS) {
-		//camera.offsetPosition(float(moveSpeed) * camera.right());
-	}
-	if (glfwGetKey(mainThread, GLFW_KEY_Z) == GLFW_PRESS) {
-		//camera.offsetPosition(float(moveSpeed) * -glm::vec3(0, 1, 0));
-	}
-	else if (glfwGetKey(mainThread, GLFW_KEY_X) == GLFW_PRESS) {
-		//camera.offsetPosition(float(moveSpeed) * glm::vec3(0, 1, 0));
+		if (glfwGetKey(mainThread, GLFW_KEY_S) == GLFW_PRESS) {
+			//playa->UpdatePosition()
+			//camera.offsetPosition(float(moveSpeed) * -camera.forward());
+		}
+		else if (glfwGetKey(mainThread, GLFW_KEY_W) == GLFW_PRESS) {
+			//camera.offsetPosition(float(moveSpeed) * camera.forward());
+		}
+		if (glfwGetKey(mainThread, GLFW_KEY_A) == GLFW_PRESS) {
+			//camera.offsetPosition(float(moveSpeed) * -camera.right());
+		}
+		else if (glfwGetKey(mainThread, GLFW_KEY_D) == GLFW_PRESS) {
+			//camera.offsetPosition(float(moveSpeed) * camera.right());
+		}
+		if (glfwGetKey(mainThread, GLFW_KEY_Z) == GLFW_PRESS) {
+			//camera.offsetPosition(float(moveSpeed) * -glm::vec3(0, 1, 0));
+		}
+		else if (glfwGetKey(mainThread, GLFW_KEY_X) == GLFW_PRESS) {
+			//camera.offsetPosition(float(moveSpeed) * glm::vec3(0, 1, 0));
+		}
 	}
 }
 void GetPositions(){
 	for (int i = 0; i < objects.size(); i++){
-		objects[i]->UpdatePosition();
+		objects[i]->UpdatePosition(glm::vec3(0));
 	}
 }
 void Update(double dt) {

@@ -145,8 +145,8 @@ void Object::Flush(){
 void Object::Update(double dt){
 	
 }
-void Object::UpdatePosition(){
-
+void Object::UpdatePosition(glm::vec3 tr){
+	position = glm::translate(glm::mat4(), tr);
 }
 std::vector<Face>& Object::GetIndices(){
 	return indices;
