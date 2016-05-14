@@ -188,7 +188,7 @@ void Character::Update(double dt){
 		posStorage.push_back(glm::vec2(positionXYZ.x, positionXYZ.z));
 	}
 	else{
-		int p = posStorage.size() - 1 - int(mainC->timeCounter);
+		int p = posStorage.size() - 1 - int(timeCounter);
 
 
 		if (p <= thisTrigger&&once){
@@ -198,14 +198,15 @@ void Character::Update(double dt){
 		}
 		if (p <= 0){
 			mainC->end = true;
+			goto a;
 		}
 
 		glm::vec2 pos = posStorage[p];
 		positionXYZ.x = pos.x;
 		positionXYZ.z = pos.y;
-		mainC->timeCounter += 0.20;
+		timeCounter += 1.7;
 	}
-
+	a:
 	Object::Flush();
 	Object::Update(dt);
 }

@@ -42,6 +42,11 @@ Character* playa=NULL;
 
 void Terminate() {
 	glfwTerminate();
+	delete music;
+	delete engine;
+	for (int i = 0; i < objects.size(); i++){
+		delete objects[i];
+	}
 	exit(0);
 }
 
@@ -208,7 +213,7 @@ void Run() {
 	Object* landMP = landM;
 	objects.push_back(landMP);
 
-	Character* mainC = new Character(5, 4, 4, "MainSheet.png", false, navM, 1.5f, NULL, NULL, "urgleburgle.wav", engine);
+	Character* mainC = new Character(5, 4, 4, "MainSheet.png", false, navM, 1.5f, NULL, NULL, "finalsound.wav", engine);
 	Object* mainCP = mainC;
 	objects.push_back(mainCP);
 
@@ -224,28 +229,28 @@ void Run() {
 	Object* nCar2 = carM2;
 	objects.push_back(nCar2);
 
-	Character* carM3 = new Character(5, 4, 4, "CrowSheet.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav", engine);
+	Character* carM3 = new Character(5, 4, 4, "CrowSheet.png", true, navM, 1.0f, mainC, "sound4back.wav", "sound4.wav", engine);
 	Object* nCar3 = carM3;
 	objects.push_back(nCar3);
 
 
-	Character* carM4 = new Character(5, 4, 4, "MirrorSheet2.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav", engine);
+	Character* carM4 = new Character(5, 4, 4, "MirrorSheet2.png", true, navM, 1.0f, mainC, "sevendaysr.mp3", "sevendays.mp3", engine);
 	Object* nCar4 = carM4;
 	objects.push_back(nCar4);
 
-	Character* carM5 = new Character(5, 4, 4, "MirrorSheet3.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav", engine);
+	Character* carM5 = new Character(5, 4, 4, "MirrorSheet3.png", true, navM, 1.0f, mainC, "deathr.mp3", "sound6.mp3", engine);
 	Object* nCar5 = carM5;
 	objects.push_back(nCar5);
 
-	Character* carM6 = new Character(5, 4, 4, "CatSheet2.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav", engine);
+	Character* carM6 = new Character(5, 4, 4, "CatSheet2.png", true, navM, 1.0f, mainC, "sound5back.wav", "sound5.wav", engine);
 	Object* nCar6 = carM6;
 	objects.push_back(nCar6);
 
-	Character* carM7 = new Character(5, 4, 4, "CrowSheet2.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav", engine);
+	Character* carM7 = new Character(5, 4, 4, "CrowSheet2.png", true, navM, 1.0f, mainC, "urgleback.wav", "urgleburgle.wav", engine);
 	Object* nCar7 = carM7;
 	objects.push_back(nCar7);
 
-	Character* carM8 = new Character(5, 4, 4, "SaltSheet2.png", true, navM, 1.0f, mainC, "urgleburgle.wav", "urgleburgle.wav", engine);
+	Character* carM8 = new Character(5, 4, 4, "SaltSheet2.png", true, navM, 1.0f, mainC, "sound6back.wav", "sound6.wav", engine);
 	Object* nCar8 = carM8;
 	objects.push_back(nCar8);
 
@@ -281,7 +286,6 @@ void Run() {
 
 		while (accumulator >= deltaTime) {
 
-
 			MouseInput();//update mouse change
 			glfwPollEvents(); //executes all set input callbacks
 
@@ -297,20 +301,30 @@ void Run() {
 				music->setIsPaused(false);
 
 				CameraInput(); //bypasses input system for direct camera manipulation
-				camera.ExtractPosition(mainCP->GetPosition());
 			}
-			else{
+
+			camera.ExtractPosition(mainCP->GetPosition());
+
+			if (!(!engine->isCurrentlyPlaying(carM->bSound) && !engine->isCurrentlyPlaying(carM->fSound) &&
+				!engine->isCurrentlyPlaying(carM1->bSound) && !engine->isCurrentlyPlaying(carM1->fSound) &&
+				!engine->isCurrentlyPlaying(carM2->bSound) && !engine->isCurrentlyPlaying(carM2->fSound) &&
+				!engine->isCurrentlyPlaying(carM3->bSound) && !engine->isCurrentlyPlaying(carM3->fSound) &&
+				!engine->isCurrentlyPlaying(carM4->bSound) && !engine->isCurrentlyPlaying(carM4->fSound) &&
+				!engine->isCurrentlyPlaying(carM5->bSound) && !engine->isCurrentlyPlaying(carM5->fSound) &&
+				!engine->isCurrentlyPlaying(carM6->bSound) && !engine->isCurrentlyPlaying(carM6->fSound) &&
+				!engine->isCurrentlyPlaying(carM7->bSound) && !engine->isCurrentlyPlaying(carM7->fSound) &&
+				!engine->isCurrentlyPlaying(carM8->bSound) && !engine->isCurrentlyPlaying(carM8->fSound))){
 				music->setIsPaused(true);
 				glm::vec3 tempRight = camera.right();
 				tempRight.y = 0.0f;
 				tempRight = glm::normalize(tempRight);
 
 				if (flop){
-					camera.ExtractPosition(mainCP->GetPosition() + tempRight*METER*0.1f);
+					camera.ExtractPosition(mainCP->GetPosition() + tempRight*METER*0.025f);
 					flop = !flop;
 				}
 				else{
-					camera.ExtractPosition(mainCP->GetPosition()  -tempRight*METER*0.1f);
+					camera.ExtractPosition(mainCP->GetPosition()  -tempRight*METER*0.025f);
 					flop = !flop;
 				}
 			}
@@ -333,7 +347,6 @@ void Run() {
 			}
 			GetPositions(); //transforms bullet matrices to opengl
 
-
 			DecrementTimers();
 
 			t += deltaTime;
@@ -347,9 +360,18 @@ void Run() {
 		if (mainC->end){
 		glfwSwapBuffers(mainThread);
 		//final sound
-			while (true){
+		while (!(!engine->isCurrentlyPlaying(carM->bSound) && !engine->isCurrentlyPlaying(carM->fSound) &&
+			!engine->isCurrentlyPlaying(carM1->bSound) && !engine->isCurrentlyPlaying(carM1->fSound) &&
+			!engine->isCurrentlyPlaying(carM2->bSound) && !engine->isCurrentlyPlaying(carM2->fSound) &&
+			!engine->isCurrentlyPlaying(carM3->bSound) && !engine->isCurrentlyPlaying(carM3->fSound) &&
+			!engine->isCurrentlyPlaying(carM4->bSound) && !engine->isCurrentlyPlaying(carM4->fSound) &&
+			!engine->isCurrentlyPlaying(carM5->bSound) && !engine->isCurrentlyPlaying(carM5->fSound) &&
+			!engine->isCurrentlyPlaying(carM6->bSound) && !engine->isCurrentlyPlaying(carM6->fSound) &&
+			!engine->isCurrentlyPlaying(carM7->bSound) && !engine->isCurrentlyPlaying(carM7->fSound) &&
+			!engine->isCurrentlyPlaying(carM8->bSound) && !engine->isCurrentlyPlaying(carM8->fSound))){
 				glfwPollEvents(); //executes all set input callbacks
 			}
+		Terminate();
 		}
 
 		Draw();
