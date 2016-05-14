@@ -5,7 +5,6 @@
 Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, NavMesh* n,float sizeN)
 {
 	nm = n;
-
 	counter = 0;
 	isAI = AI;
 
@@ -18,13 +17,17 @@ Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, Na
 
 	fragmentName = "fragment-shader[none].txt";
 
-	rotationXYZ = glm::vec3(0.0f, 1.0f, 0.0f);
-	rotation = -45.0f;
 	sizeXYZ = glm::vec3(sizeN);
-	position = glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, 0.0f));
+
 	destination = glm::vec3(0.0f, 0.0f, 0.0f);
+	if (!AI){
+		positionXYZ = glm::vec3(0.0f, height/2.0f, 0.0f);
+	}
+	else{
 	positionXYZ = glm::vec3(0.0f, 0.0f, 0.0f);
 	previous = nm->pointToFace(positionXYZ);
+
+	}
 
 
 	GetVertices().push_back({ { -height / 2.0f, height, 0.0f }, { (curFrame*framesSize), ((curStance + 1)*stancesSize) }, { 0.0f, 1.0f, 0.0f } });
@@ -136,10 +139,23 @@ void Character::Update(double dt){
 	}
 	}
 
+//	position = glm::translate(glm::mat4(), positionXYZ);
+////	position = glm::rotate(position, glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 1.0f));
+//	position = glm::rotate(position, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+//
+//	position = glm::scale(position, sizeXYZ);
+
+
 	Object::Flush();
 	Object::Update(dt);
 }
 
+void Character::UpdatePosition(){
+	position = glm::translate(glm::mat4(), positionXYZ);
+	position = glm::rotate(position, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	position = glm::rotate(position, glm::radians(-45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	position = glm::scale(position, sizeXYZ);
+}
 Character::~Character()
 {
 }

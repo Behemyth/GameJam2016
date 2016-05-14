@@ -171,8 +171,8 @@ void Run() {
 
 
 	SetKey(GLFW_KEY_ESCAPE, std::bind(&Terminate));
-	SetKey(GLFW_KEY_SPACE, std::bind(&TogglePhysics));
-	SetKey(GLFW_KEY_E, std::bind(&ToggleWireFrame));
+	//SetKey(GLFW_KEY_SPACE, std::bind(&TogglePhysics));
+	//SetKey(GLFW_KEY_E, std::bind(&ToggleWireFrame));
 
 	deltaTime = 1.0 / 60.0;
 	InitializeWindow();
@@ -195,6 +195,18 @@ void Run() {
 	Character* carM = new Character(5,4,4,"CatSheet.png",true,navM,1.0f);
 	Object* nCar = carM;
 	objects.push_back(nCar);
+
+	Character* carM1 = new Character(5, 4, 4, "SaltSheet.png", true, navM, 1.0f);
+	Object* nCar1 = carM1;
+	objects.push_back(nCar1);
+
+	Character* carM2 = new Character(5, 4, 4, "MirrorSheet.png", true, navM, 1.0f);
+	Object* nCar2 = carM2;
+	objects.push_back(nCar2);
+
+	Character* carM3 = new Character(5, 4, 4, "CrowSheet.png", true, navM, 1.0f);
+	Object* nCar3 = carM3;
+	objects.push_back(nCar3);
 
 	Character* mainC = new Character(5, 4, 4, "MainSheet.png", false, navM,1.5f);
 	Object* mainCP = mainC;
@@ -311,24 +323,44 @@ void CameraInput() {
 
 
 		if (glfwGetKey(mainThread, GLFW_KEY_S) == GLFW_PRESS) {
-
+			
 			playa->positionXYZ += -tempFor*moveSpeed;
-			playa->normalizedDirection += -tempFor*moveSpeed;
+			if (playa->nm->inMesh(playa->positionXYZ)){
+				playa->normalizedDirection += -tempFor*moveSpeed;
+			}
+			else{
+				playa->positionXYZ += tempFor*moveSpeed;
+			}
 			//camera.offsetPosition(float(moveSpeed) * -camera.forward());
 		}
 		else if (glfwGetKey(mainThread, GLFW_KEY_W) == GLFW_PRESS) {
 			playa->positionXYZ += tempFor*moveSpeed;
-			playa->normalizedDirection += tempFor*moveSpeed;
+			if (playa->nm->inMesh(playa->positionXYZ)){
+				playa->normalizedDirection += tempFor*moveSpeed;
+			}
+			else{
+				playa->positionXYZ += -tempFor*moveSpeed;
+			}
 			//camera.offsetPosition(float(moveSpeed) * camera.forward());
 		}
 		if (glfwGetKey(mainThread, GLFW_KEY_A) == GLFW_PRESS) {
 			playa->positionXYZ += -tempRight*moveSpeed;
-			playa->normalizedDirection += -tempRight*moveSpeed;
+			if (playa->nm->inMesh(playa->positionXYZ)){
+				playa->normalizedDirection += -tempRight*moveSpeed;
+			}
+			else{
+				playa->positionXYZ += tempRight*moveSpeed;
+			}
 			//camera.offsetPosition(float(moveSpeed) * -camera.right());
 		}
 		else if (glfwGetKey(mainThread, GLFW_KEY_D) == GLFW_PRESS) {
 			playa->positionXYZ += tempRight*moveSpeed;
-			playa->normalizedDirection += tempRight*moveSpeed;
+			if (playa->nm->inMesh(playa->positionXYZ)){
+				playa->normalizedDirection += tempRight*moveSpeed;
+			}
+			else{
+				playa->positionXYZ += -tempRight*moveSpeed;
+			}
 			//camera.offsetPosition(float(moveSpeed) * camera.right());
 		}
 		if (glfwGetKey(mainThread, GLFW_KEY_Z) == GLFW_PRESS) {
