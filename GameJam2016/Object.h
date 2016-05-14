@@ -15,7 +15,7 @@ public:
 	virtual void Draw(Camera&);
 	virtual void Load();
 	virtual void Update(double );
-
+	void Flush();
 	glm::vec3 GetPosition();
 	glm::mat4 GetMatrix();
 

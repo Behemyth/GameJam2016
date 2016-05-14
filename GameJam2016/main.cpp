@@ -144,8 +144,8 @@ void InitializeWindow() {
 	// setup camera 
 	camera.setViewportAspectRatio(SCREEN_SIZE.x / (float)SCREEN_SIZE.y);
 
-	camera.setPosition(glm::vec3(-METER*2.0f, METER*1.5f, METER*2.0f));
-	camera.offsetOrientation(45.0f, 10.0f);
+	camera.setPosition(glm::vec3(-METER*2.0f, METER*2.0f, METER*2.0f));
+	camera.offsetOrientation(45.0f, 45.0f);
 
 	//unsigned concurentThreadsSupported = std::thread::hardware_concurrency();
 	//threads = new ThreadPool(concurentThreadsSupported);
@@ -176,16 +176,16 @@ void Run() {
 
 	glfwSetScrollCallback(mainThread, ScrollCallback);
 
-	Skybox* hand = new Skybox();
-	Object* handP = hand;
-	objects.push_back(handP);
+	//Skybox* hand = new Skybox();
+	//Object* handP = hand;
+	//objects.push_back(handP);
 
 
 	NavMesh* navM = new NavMesh();
 	Object* nObj = navM;
 	objects.push_back(nObj);
 
-	Character* carM = new Character();
+	Character* carM = new Character(5);
 	Object* nCar = carM;
 	objects.push_back(nCar);
 

@@ -152,7 +152,8 @@ glm::mat4 Camera::matrix() const {
 	if (isAttached){
 		return cameraExtract->matrix();
 	}
-    glm::mat4 camera = glm::perspective(glm::radians(_fieldOfView.y), _viewportAspectRatio, _nearPlane, _farPlane);
+   // glm::mat4 camera = glm::perspective(glm::radians(_fieldOfView.y), _viewportAspectRatio, _nearPlane, _farPlane);
+	glm::mat4 camera = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, _nearPlane, _farPlane);
     camera *= orientation();
     camera = glm::translate(camera, -_position);
     return camera;

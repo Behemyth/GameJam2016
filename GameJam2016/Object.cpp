@@ -60,6 +60,7 @@ void Object::ExtractFromFile(const char* name){
 
 void Object::Draw(Camera& camera)
 {
+
 	if (shader == NULL){
 		std::cout << "Forgot to call Load()" << std::endl;
 	}
@@ -133,7 +134,14 @@ void Object::Load(){
 
 	glBindVertexArray(0);
 }
+void Object::Flush(){
+	glBindVertexArray(vao);
 
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)*vertices.size(), &vertices.front(), GL_DYNAMIC_DRAW);
+
+	glBindVertexArray(0);
+}
 void Object::Update(double dt){
 	
 }
