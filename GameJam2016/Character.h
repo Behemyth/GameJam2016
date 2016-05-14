@@ -12,7 +12,7 @@ public:
 	void Update(double dt);
 	glm::vec3 normalizedDirection;
 	NavMesh* nm;
-	uint amount;
+	uint amount; 
 	bool forward;
 	float timeCounter;
 	bool end;
