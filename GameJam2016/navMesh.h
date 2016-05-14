@@ -7,7 +7,7 @@ public:
 	NavMesh();
 	std::vector<Vertex> shortestPath(Vertex start, Vertex end);
 private:
-	std::vector<Face> neighbors;
+	std::vector< std::vector<Index> > neighbors;
 
 
 };

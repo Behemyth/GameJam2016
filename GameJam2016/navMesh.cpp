@@ -15,7 +15,11 @@ NavMesh::NavMesh(){
 
 	for (int i = 0; i < GetIndices().size(); i++) {
 		for (int j = 0; j < GetIndices().size(); j++) {
-			//if ()
+			std::vector<Index> neighborsOfi;
+			if ( areNeighbors(GetIndices()[i], GetIndices()[j]) ) {
+				neighborsOfi.push_back(GetIndices()[j]);
+			}
+			neighbors.push_back(neighborsOfi);
 		}
 	}
 
@@ -23,7 +27,7 @@ NavMesh::NavMesh(){
 	Load();
 }
 
-bool isNeighbor(const Index& a, const Index& b) {
+bool areNeighbors(const Index& a, const Index& b) {
 	for (int i = 0; i < 3; i++) {
 		if (a.indices[i].position[0] == b.indices[i].position[0] &&
 			a.indices[i].position[0] == b.indices[i].position[0] &&
@@ -41,7 +45,7 @@ struct sortF {
 };
 
 float distance(const Node& a, const Node& b) {
-	return sqrt(pow(a.v.position[0] - b.v.position[0], 2) + pow(a.v.position[1] - b.v.position[1], 2) + pow(a.v.position[2] - b.v.position[2], 2));
+	return sqrt(pow(a.v.position.x - b.v.position.x, 2) + pow(a.v.position.y - b.v.position.y, 2) + pow(a.v.position.z - b.v.position.z, 2));
 }
 
 std::vector<Vertex> NavMesh::shortestPath(Vertex start, Vertex end) {
