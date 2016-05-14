@@ -249,6 +249,8 @@ void Run() {
 	Object* nCar8 = carM8;
 	objects.push_back(nCar8);
 
+	bool flop = false;
+
 	playa = mainC;
 	//timer info for loop
 	double t = 0.0f;
@@ -295,11 +297,24 @@ void Run() {
 				music->setIsPaused(false);
 
 				CameraInput(); //bypasses input system for direct camera manipulation
+				camera.ExtractPosition(mainCP->GetPosition());
 			}
 			else{
 				music->setIsPaused(true);
+				glm::vec3 tempRight = camera.right();
+				tempRight.y = 0.0f;
+				tempRight = glm::normalize(tempRight);
+
+				if (flop){
+					camera.ExtractPosition(mainCP->GetPosition() + tempRight*METER*0.1f);
+					flop = !flop;
+				}
+				else{
+					camera.ExtractPosition(mainCP->GetPosition()  -tempRight*METER*0.1f);
+					flop = !flop;
+				}
 			}
-			camera.ExtractPosition(mainCP->GetPosition());
+
 
 			if (!engine->isCurrentlyPlaying(carM->bSound) && !engine->isCurrentlyPlaying(carM->fSound) &&
 				!engine->isCurrentlyPlaying(carM1->bSound) && !engine->isCurrentlyPlaying(carM1->fSound) &&
