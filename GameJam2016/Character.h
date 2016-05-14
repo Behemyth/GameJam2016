@@ -18,7 +18,10 @@ private:
 
 	NavMesh* nm;
 
-	Vertex destination;
+	glm::vec3 normalizedDirection;
+	glm::vec3 destination;
+
+	std::vector<Face> path;
 
 	bool isAI;
 	int curStance;

@@ -30,6 +30,7 @@ public:
 	glm::vec3 center(Face& a);
 	float distance(Node& a, Node& b);
 	std::vector<Face> findPath(std::vector<Face>& path, Node& first, Node& last);
+	std::vector<Face> findPath2(std::vector<Face>& path, std::map<Node, Node*> m, Node& last);
 	//--------------------------------------------------------------------------------------------
 private:
 	std::vector< std::vector<Face> > neighbors;
