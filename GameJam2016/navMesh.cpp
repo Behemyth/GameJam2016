@@ -24,6 +24,43 @@ NavMesh::NavMesh(){
 	Load();
 }
 
+bool NavMesh::inMesh(const Vertex& v) {
+	for (int i = 0; i < GetIndices().size(); i++) {
+		if (inFace(GetIndices()[i], v)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool NavMesh::inFace(const Face& f, const Vertex& p) {
+	// Compute vectors
+	glm::vec3 a = GetVertices()[f.indices.x].position;
+	glm::vec3 b = GetVertices()[f.indices.y].position;
+	glm::vec3 c = GetVertices()[f.indices.z].position;
+	
+	glm::vec3 v0 = c - a;
+	glm::vec3 v1 = b - a;
+	glm::vec3 v2 = p.position - a;
+
+	// Compute dot products
+	float dot00 = dot(v0, v0);
+	float dot01 = dot(v0, v1);
+	float dot02 = dot(v0, v2);
+	float dot11 = dot(v1, v1);
+	float dot12 = dot(v1, v2);
+
+	// Compute barycentric coordinates
+	float invDenom = 1 / (dot00 * dot11 - dot01 * dot01);
+	float u = (dot11 * dot02 - dot01 * dot12) * invDenom;
+	float v = (dot00 * dot12 - dot01 * dot02) * invDenom;
+
+	// Check if point is in triangle
+	return (u >= 0) && (v >= 0) && (u + v < 1);
+
+}
+
 bool NavMesh::areNeighbors(const Face& a, const Face& b) {
 	for (int i = 0; i < 3; i++) {
 		if (GetVertices()[a.indices[i]] == GetVertices()[b.indices[i]]) {
@@ -77,6 +114,8 @@ std::vector<Face> NavMesh::findPath(std::vector<Face>& path, const Node& first, 
 		q = *(q.parent);
 	}
 	path.push_back(q.v);
+	std::reverse(path.begin(), path.end());
+	return path;
 
 }
 
