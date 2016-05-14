@@ -2,7 +2,7 @@
 #include "rand.h"
 
 
-Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, NavMesh* n,float sizeN,Character* mainC1)
+Character::Character(float fps1, int frameS, int stanceS, char* texName, bool AI, NavMesh* n, float sizeN, Character* mainC1, irrklang::ISoundEngine* soundN)
 {
 	amount = 0;
 	timeCounter = 0;
@@ -38,6 +38,14 @@ Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, Na
 	previous = nm->pointToFace(positionXYZ);
 	destination = positionXYZ;
 	}
+
+
+	std::uniform_real_distribution<float> startDistro(-200 * METER, 200 * METER);
+
+	sound = soundN;
+	float transx = GetDistribution(startDistro);
+	float transy = GetDistribution(startDistro);
+	translate = glm::vec3(transx, 0.0f, transy);
 
 
 	GetVertices().push_back({ { -height / 2.0f, height, 0.0f }, { (curFrame*framesSize), ((curStance + 1)*stancesSize) }, { 0.0f, 1.0f, 0.0f } });

@@ -6,7 +6,7 @@ class Character :
 	public Object
 {
 public:
-	Character(float fps, int, int, char*, bool, NavMesh*, float, Character*);
+	Character(float fps, int, int, char*, bool, NavMesh*, float, Character*, irrklang::ISoundEngine*);
 	~Character();
 	void UpdatePosition();
 	void Update(double dt);
@@ -25,6 +25,9 @@ private:
 	float fps;
 	float framesSize;
 	float stancesSize;
+
+	irrklang::ISoundEngine* sound;
+	glm::vec3 translate;
 
 	std::vector<glm::vec2> posStorage;
 
