@@ -1,8 +1,10 @@
 #include "Character.h"
 
 
-Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI)
+Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, NavMesh* n)
 {
+	nm = n;
+
 	counter = 0;
 	isAI = AI;
 
@@ -35,8 +37,7 @@ void Character::Update(double dt){
 	counter += fps*dt;
 
 	if (isAI){
-
-
+		
 	}
 	else{
 		normalizedDirection = glm::normalize(normalizedDirection);

@@ -187,11 +187,11 @@ void Run() {
 	Object* nObj = navM;
 	objects.push_back(nObj);
 
-	Character* carM = new Character(5,4,4,"CatSheet.png",true);
+	Character* carM = new Character(5,4,4,"CatSheet.png",true,navM);
 	Object* nCar = carM;
 	objects.push_back(nCar);
 
-	Character* mainC = new Character(5, 4, 4, "CatSheet.png", false);
+	Character* mainC = new Character(5, 4, 4, "CatSheet.png", false, navM);
 	Object* mainCP = mainC;
 	objects.push_back(mainCP);
 	playa = mainC;
