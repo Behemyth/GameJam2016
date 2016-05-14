@@ -2,6 +2,12 @@
 #include "GlobalStructures.h"
 #include "Object.h"
 
+struct Node {
+	Node* parent;
+	Face v;
+	float f, g, h;
+};
+
 class NavMesh: public Object {
 public:
 	NavMesh();

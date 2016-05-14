@@ -5,11 +5,7 @@
 #include "NavMesh.h"
 #include "GlobalStructures.h"
 
-struct Node {
-	Node* parent;
-	Face v;
-	float f, g, h;
-};
+
 NavMesh::NavMesh(){
 
 	ExtractFromFile("BasicNav.obj");
