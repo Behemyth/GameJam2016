@@ -29,10 +29,10 @@ public:
 
 	std::vector<Face>& GetIndices();
 	std::vector<Vertex>& GetVertices();
+	bool isGhost;
 
 protected:
 	bool isStatic;
-	bool isGhost;
 
 	glm::mat4 position;
 	glm::mat4 positionNormal;

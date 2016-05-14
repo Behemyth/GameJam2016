@@ -196,10 +196,15 @@ void Run() {
 
 	glfwSetScrollCallback(mainThread, ScrollCallback);
 
-	Skybox* hand = new Skybox(&camera);
+	Skybox* hand = new Skybox(&camera,-2.0f*METER,"skybox.png");
 	Object* handP = hand;
 	objects.push_back(handP);
 
+	Skybox* filter = new Skybox(&camera, 0.4f*METER, "red.png");
+	Object* filterP = filter;
+	objects.push_back(filterP);
+
+	filterP->isGhost = true;
 
 	NavMesh* navM = new NavMesh("Level1.obj");
 	Object* nObj = navM;
@@ -295,6 +300,8 @@ void Run() {
 				!engine->isCurrentlyPlaying(carM7->bSound) && !engine->isCurrentlyPlaying(carM7->fSound) &&
 				!engine->isCurrentlyPlaying(carM8->bSound) && !engine->isCurrentlyPlaying(carM8->fSound)){
 				music->setIsPaused(false);
+				filterP->isGhost = true;
+
 
 				CameraInput(); //bypasses input system for direct camera manipulation
 			}
@@ -323,6 +330,9 @@ void Run() {
 					camera.ExtractPosition(mainCP->GetPosition()  -tempRight*METER*0.01f);
 					flop = !flop;
 				}
+				if (!mainC->forward){
+					filterP->isGhost = false;
+				}
 			}
 
 
@@ -336,6 +346,8 @@ void Run() {
 				!engine->isCurrentlyPlaying(carM7->bSound) && !engine->isCurrentlyPlaying(carM7->fSound) &&
 				!engine->isCurrentlyPlaying(carM8->bSound) && !engine->isCurrentlyPlaying(carM8->fSound)){
 				music->setIsPaused(false);
+				filterP->isGhost = true;
+
 				Update(deltaTime*timeMod); //updates all objects based on the constant deltaTime.
 			}
 			else{
@@ -353,20 +365,13 @@ void Run() {
 		//draw
 		glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		if (mainC->end){
+		if (mainC->finally){
 		glfwSwapBuffers(mainThread);
 		//final sound
-		while (!(!engine->isCurrentlyPlaying(carM->bSound) && !engine->isCurrentlyPlaying(carM->fSound) &&
-			!engine->isCurrentlyPlaying(carM1->bSound) && !engine->isCurrentlyPlaying(carM1->fSound) &&
-			!engine->isCurrentlyPlaying(carM2->bSound) && !engine->isCurrentlyPlaying(carM2->fSound) &&
-			!engine->isCurrentlyPlaying(carM3->bSound) && !engine->isCurrentlyPlaying(carM3->fSound) &&
-			!engine->isCurrentlyPlaying(carM4->bSound) && !engine->isCurrentlyPlaying(carM4->fSound) &&
-			!engine->isCurrentlyPlaying(carM5->bSound) && !engine->isCurrentlyPlaying(carM5->fSound) &&
-			!engine->isCurrentlyPlaying(carM6->bSound) && !engine->isCurrentlyPlaying(carM6->fSound) &&
-			!engine->isCurrentlyPlaying(carM7->bSound) && !engine->isCurrentlyPlaying(carM7->fSound) &&
-			!engine->isCurrentlyPlaying(carM8->bSound) && !engine->isCurrentlyPlaying(carM8->fSound))){
+
+		while (engine->isCurrentlyPlaying(mainC->fSound)){
 				glfwPollEvents(); //executes all set input callbacks
-			}
+		}
 		Terminate();
 		}
 

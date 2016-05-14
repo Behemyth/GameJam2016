@@ -18,7 +18,7 @@ public:
 	bool end;
 	irrklang::ISoundEngine* sound;
 	char* bSound;
-
+	bool finally;
 	char* fSound;
 private:
 	

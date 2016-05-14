@@ -1,8 +1,9 @@
 #include "Skybox.h"
 
 
-Skybox::Skybox(Camera* cameraN)
+Skybox::Skybox(Camera* cameraN,float height1,char* texname)
 {
+	height = height1;
 	camera = cameraN;
 	//isStatic = true;
 
@@ -16,7 +17,7 @@ Skybox::Skybox(Camera* cameraN)
 	//NormalizeScale(glm::vec3(height));
 
 
-	textureName = "skybox.png";
+	textureName = texname;
 
 	Load();
 }

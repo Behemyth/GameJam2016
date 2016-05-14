@@ -4,6 +4,7 @@
 
 Character::Character(float fps1, int frameS, int stanceS, char* texName, bool AI, NavMesh* n, float sizeN, Character* mainC1, char* bSound1, char* fSound1, irrklang::ISoundEngine* soundN)
 {
+	finally = false;
 	once = true;
 	sound = soundN;
 	bSound = bSound1;
@@ -11,7 +12,7 @@ Character::Character(float fps1, int frameS, int stanceS, char* texName, bool AI
 	thisTrigger = 0;
 	end = false;
 	amount = 0;
-	timeCounter = 0;
+	timeCounter = 1;
 	forward = true;
 	parent = this;
 	tail = this;
@@ -146,43 +147,54 @@ void Character::Update(double dt){
 		else{
 			normalizedDirection = glm::normalize(normalizedDirection);
 		}
-		if (glm::length(normalizedDirection) > 0.0000001){
-			if (normalizedDirection.x >= 0 && normalizedDirection.z >= 0){
-				curStance = 3;
-			}
-			else if (normalizedDirection.x >= 0 && normalizedDirection.z <= 0){
-				curStance = 0;
-			}
-			else if (normalizedDirection.x <= 0 && normalizedDirection.z >= 0){
-				curStance = 1;
-			}
-			else{
-				curStance = 2;
-			}
+		
+	}
+	else{
 
-
-
-
-			if (counter >= 1.0f){
-				counter = 0.0f;
-				curFrame += 1;
-				if (curFrame >= glm::round(1.0f / framesSize)){
-					curFrame = 0;
-				}
-
-				GetVertices()[0].texCoord = glm::vec2((curFrame*framesSize), ((curStance + 1)*stancesSize));
-				GetVertices()[1].texCoord = glm::vec2(((curFrame + 1)*framesSize), ((curStance + 1)*stancesSize));
-				GetVertices()[2].texCoord = glm::vec2((curFrame*framesSize), (curStance*stancesSize));
-				GetVertices()[3].texCoord = glm::vec2(((curFrame + 1)*framesSize), (curStance*stancesSize));
-
-			}
-		}
+		int p = posStorage.size()  - int(timeCounter);
+		glm::vec3 prev = positionXYZ;
+		glm::vec2 pos = posStorage[p];
+		prev.x = pos.x;
+		prev.z = pos.y;
+		normalizedDirection = glm::normalize(positionXYZ - prev);
 	}
 //	position = glm::translate(glm::mat4(), positionXYZ);
 ////	position = glm::rotate(position, glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 1.0f));
 //	position = glm::rotate(position, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 //
 //	position = glm::scale(position, sizeXYZ);
+
+	if (glm::length(normalizedDirection) > 0.0000001){
+		if (normalizedDirection.x >= 0 && normalizedDirection.z >= 0){
+			curStance = 3;
+		}
+		else if (normalizedDirection.x >= 0 && normalizedDirection.z <= 0){
+			curStance = 0;
+		}
+		else if (normalizedDirection.x <= 0 && normalizedDirection.z >= 0){
+			curStance = 1;
+		}
+		else{
+			curStance = 2;
+		}
+
+
+
+
+		if (counter >= 1.0f){
+			counter = 0.0f;
+			curFrame += 1;
+			if (curFrame >= glm::round(1.0f / framesSize)){
+				curFrame = 0;
+			}
+
+			GetVertices()[0].texCoord = glm::vec2((curFrame*framesSize), ((curStance + 1)*stancesSize));
+			GetVertices()[1].texCoord = glm::vec2(((curFrame + 1)*framesSize), ((curStance + 1)*stancesSize));
+			GetVertices()[2].texCoord = glm::vec2((curFrame*framesSize), (curStance*stancesSize));
+			GetVertices()[3].texCoord = glm::vec2(((curFrame + 1)*framesSize), (curStance*stancesSize));
+
+		}
+	}
 
 	if (mainC->forward){
 		posStorage.push_back(glm::vec2(positionXYZ.x, positionXYZ.z));
@@ -194,7 +206,7 @@ void Character::Update(double dt){
 		if (p <= thisTrigger&&once){
 			once = false;
 			irrklang::ISound* s = sound->play3D(fSound, irrklang::vec3df(0.0f, 0.0f, 0.0f), false, false, true);
-
+			finally = true;
 		}
 		if (p <= 0){
 			mainC->end = true;
@@ -204,7 +216,7 @@ void Character::Update(double dt){
 		glm::vec2 pos = posStorage[p];
 		positionXYZ.x = pos.x;
 		positionXYZ.z = pos.y;
-		timeCounter += 1.7;
+		timeCounter += 1.85;
 	}
 	a:
 	Object::Flush();
