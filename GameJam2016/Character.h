@@ -18,7 +18,6 @@ private:
 
 	NavMesh* nm;
 
-	glm::vec3 normalizedDirection;
 	Vertex destination;
 
 	bool isAI;
