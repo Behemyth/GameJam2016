@@ -22,7 +22,7 @@ public:
 	virtual void UpdatePosition();
 	void ExtractFromFile(const char* name);
 
-	std::vector<Index>& GetIndices();
+	std::vector<Face>& GetIndices();
 	std::vector<Vertex>& GetVertices();
 
 protected:
@@ -41,7 +41,7 @@ protected:
 
 private:
 	std::vector<Vertex> vertices;
-	std::vector<Index> indices;
+	std::vector<Face> indices;
 
 	Texture* texture;
 	Texture* displacement;

@@ -129,7 +129,7 @@ void Object::Load(){
 
 	glGenBuffers(1, &ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Index)*indices.size(), &indices.front(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Face)*indices.size(), &indices.front(), GL_STATIC_DRAW);
 
 	glBindVertexArray(0);
 }
@@ -140,7 +140,7 @@ void Object::Update(double dt){
 void Object::UpdatePosition(){
 
 }
-std::vector<Index>& Object::GetIndices(){
+std::vector<Face>& Object::GetIndices(){
 	return indices;
 }
 std::vector<Vertex>& Object::GetVertices(){
