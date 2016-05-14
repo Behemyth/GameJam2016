@@ -4,6 +4,7 @@
 
 Character::Character(float fps1, int frameS, int stanceS, char* texName, bool AI, NavMesh* n, float sizeN, Character* mainC1, char* bSound1, char* fSound1, irrklang::ISoundEngine* soundN)
 {
+	once = true;
 	sound = soundN;
 	bSound = bSound1;
 	fSound = fSound1;
@@ -198,7 +199,8 @@ void Character::Update(double dt){
 		if (p <= 1){
 			mainC->end = true;
 		}
-		if (p <= thisTrigger){
+		if (p <= thisTrigger&&once){
+			once = false;
 			irrklang::ISound* s = sound->play3D(fSound, irrklang::vec3df(0.0f, 0.0f, 0.0f), false, false, true);
 		}
 		glm::vec2 pos = posStorage[p];

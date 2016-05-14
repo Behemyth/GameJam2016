@@ -21,7 +21,7 @@ private:
 	char* bSound;
 
 	char* fSound;
-
+	bool once;
 	int thisTrigger;
 	Character* mainC;
 	Character* tail;
