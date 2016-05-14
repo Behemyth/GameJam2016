@@ -1,7 +1,7 @@
 #include "Character.h"
 
 
-Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, NavMesh* n)
+Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, NavMesh* n,float sizeN)
 {
 	nm = n;
 
@@ -19,6 +19,7 @@ Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, Na
 
 	rotationXYZ = glm::vec3(1.0f, 0.0f, 1.0f);
 	rotation = -45.0f;
+	sizeXYZ = glm::vec3(sizeN);
 
 	GetVertices().push_back({ { -height / 2.0f, height, 0.0f }, { (curFrame*framesSize), ((curStance + 1)*stancesSize) }, { 0.0f, 1.0f, 0.0f } });
 	GetVertices().push_back({ { height / 2.0f, height, 0.0f }, { ((curFrame + 1)*framesSize), ((curStance + 1)*stancesSize) }, { 0.0f, 1.0f, 0.0f } });
@@ -42,37 +43,37 @@ void Character::Update(double dt){
 	else{
 		normalizedDirection = glm::normalize(normalizedDirection);
 	}
-
-	if (normalizedDirection.x>0 && normalizedDirection.z>0){
-		curStance = 3;
-	}
-	else if (normalizedDirection.x>0 && normalizedDirection.z<0){
-		curStance = 0;
-	}
-	else if (normalizedDirection.x<0 && normalizedDirection.z>0){
-		curStance = 1;
-	}
-	else{
-		curStance = 2;
-	}
-
-
-
-
-	if (counter>=1.0f){
-		counter = 0.0f;
-		curFrame += 1;
-		if (curFrame >= glm::round(1.0f / framesSize)){
-			curFrame = 0;
+	if (glm::length(normalizedDirection) > 0.0000001){
+		if (normalizedDirection.x >= 0 && normalizedDirection.z >= 0){
+			curStance = 3;
+		}
+		else if (normalizedDirection.x >= 0 && normalizedDirection.z <= 0){
+			curStance = 0;
+		}
+		else if (normalizedDirection.x <= 0 && normalizedDirection.z >= 0){
+			curStance = 1;
+		}
+		else{
+			curStance = 2;
 		}
 
-		GetVertices()[0].texCoord = glm::vec2((curFrame*framesSize), ((curStance + 1)*stancesSize));
-		GetVertices()[1].texCoord = glm::vec2(((curFrame + 1)*framesSize), ((curStance + 1)*stancesSize));
-		GetVertices()[2].texCoord = glm::vec2((curFrame*framesSize), (curStance*stancesSize));
-		GetVertices()[3].texCoord = glm::vec2(((curFrame + 1)*framesSize), (curStance*stancesSize));
 
+
+
+		if (counter >= 1.0f){
+			counter = 0.0f;
+			curFrame += 1;
+			if (curFrame >= glm::round(1.0f / framesSize)){
+				curFrame = 0;
+			}
+
+			GetVertices()[0].texCoord = glm::vec2((curFrame*framesSize), ((curStance + 1)*stancesSize));
+			GetVertices()[1].texCoord = glm::vec2(((curFrame + 1)*framesSize), ((curStance + 1)*stancesSize));
+			GetVertices()[2].texCoord = glm::vec2((curFrame*framesSize), (curStance*stancesSize));
+			GetVertices()[3].texCoord = glm::vec2(((curFrame + 1)*framesSize), (curStance*stancesSize));
+
+		}
 	}
-
 
 	Object::Flush();
 	Object::Update(dt);
