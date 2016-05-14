@@ -224,7 +224,7 @@ void Run() {
 	Object* nCar2 = carM2;
 	objects.push_back(nCar2);
 
-	Character* carM3 = new Character(5, 4, 4, "CrowSheet.png", true, navM, 1.0f, mainC, "", "");
+	Character* carM3 = new Character(5, 4, 4, "CrowSheet.png", true, navM, 1.0f, mainC, "", ""); 
 	Object* nCar3 = carM3;
 	objects.push_back(nCar3);
 
