@@ -61,6 +61,15 @@ void Character::Update(double dt){
 	counter += fps*dt;
 
 	if (isAI){
+
+		char* filename = "";
+		irrklang::ISound* s = sound->play3D(filename, irrklang::vec3df(translate.x, translate.y, translate.z), false, false, true);
+
+		if (s){
+			s->setVolume(1.0f);
+			s->setMinDistance(1.0f*KILOMETER);
+			s->setPosition(irrklang::vec3df(0, 0, 0));
+		}
 		
 		if (vecsEqual(destination, positionXYZ)) {
 			std::vector<Face> neighbors = nm->findNeighbors(positionXYZ);
