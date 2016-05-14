@@ -13,9 +13,15 @@ typedef struct Vertex{
 	bool operator ==(const Vertex& y) {
 		return (position[0] == y.position[0] && position[1] == y.position[1] && position[2] == y.position[2]);
 	}
+	bool operator !=(const Vertex& y) {
+		return (position[0] != y.position[0] || position[1] != y.position[1] || position[2] != y.position[2]);
+	}
 }Vertex;
 
 //A single index struct has 3 indices to 3 vertices creating a triangle CW Order!!! for correct shading
 typedef struct Face{
 	glm::uvec3 indices;
-}Index;
+	bool operator ==(const Face& y) {
+		return (indices[0] == y.indices[0] && indices[1] == y.indices[1] && indices[2] == y.indices[2]);
+	}
+}Face;
