@@ -4,6 +4,7 @@
 
 Character::Character(float fps1,int frameS,int stanceS,char* texName,bool AI, NavMesh* n,float sizeN,Character* mainC1)
 {
+	end = false;
 	amount = 0;
 	timeCounter = 0;
 	forward = true;
@@ -178,10 +179,15 @@ void Character::Update(double dt){
 		posStorage.push_back(glm::vec2(positionXYZ.x, positionXYZ.z));
 	}
 	else{
-		glm::vec2 pos = posStorage[posStorage.size() - 1 - int(mainC->timeCounter)];
+		int p = posStorage.size() - 1 - int(mainC->timeCounter);
+
+		if (p <= 1){
+			mainC->end = true;
+		}
+		glm::vec2 pos = posStorage[p];
 		positionXYZ.x = pos.x;
 		positionXYZ.z = pos.y;
-		mainC->timeCounter += 1;
+		mainC->timeCounter += 0.1;
 	}
 
 	Object::Flush();

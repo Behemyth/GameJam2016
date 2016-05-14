@@ -15,6 +15,7 @@ public:
 	uint amount;
 	bool forward;
 	float timeCounter;
+	bool end;
 private:
 	
 	
